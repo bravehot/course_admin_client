@@ -10,7 +10,14 @@
         <span v-for="(item, index ) in weekData" :key="index">{{item}}</span>
       </div>
       <div class="calendar_m_content">
-        <span :class="`${item.content === day ? 'hot' : ''}`" v-for="(item, index) in renderData(year, month)" :key="index" @click="clickDays(item)">{{item.content}}</span>
+        <span 
+          v-for="(item, index) in renderData(year, month)" 
+            :key="index" 
+              @click="clickDays(item, index)"
+              :class="[{hot: item.content === day}, {isClick: index === active}]"
+              >
+              {{item.content}}
+        </span>
       </div>
     </div>
   </div>
@@ -19,6 +26,7 @@
 export default {
   data() {
     return {
+      active: '',
       weekData: ['日', '一', '二', '三', '四', '五', '六'],
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
@@ -29,8 +37,14 @@ export default {
     this.renderData(this.year, this.month)
   },
   methods: {
-    clickDays (item) {
-      item.className = 'touch'
+    clickDays (item, index) {
+      this.active = index
+      let select = {
+        year: this.year,
+        month: this.month + 1,
+        day: item.content
+      }
+      this.$store.dispatch('selectDayData', select)
     },
     renderData (year, month) { 
       // 每个月的天数
@@ -127,6 +141,11 @@ export default {
         font: bold 16px/90px '微软雅黑';
         &.hot {
           background: #007FFF;
+          border-radius: 20px;
+          color: #ffffff;
+        }
+        &.isClick {
+          background: #E6A23C;
           border-radius: 20px;
           color: #ffffff;
         }
