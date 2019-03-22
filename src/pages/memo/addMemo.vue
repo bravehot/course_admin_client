@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-import activeTypeData from "../../constants/activeTypeData.js";
+import { ctiveTypeData } from "../../constants/dataList.js";
 export default {
   name: "addMemo",
   data() {

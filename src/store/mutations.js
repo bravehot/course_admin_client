@@ -7,5 +7,14 @@ export default {
   },
   getTimeList (state, timeList) {
     state.timeList = timeList
+  },
+  setStartTime (state, startTime) {
+    state.startTime = startTime
+  },
+  setThisWeek (state, thisWeek) {
+    state.thisWeek = thisWeek
+  },
+  setNeedClass (state, setNeedClass) {
+    state.setNeedClass = setNeedClass
   }
 }

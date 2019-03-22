@@ -58,7 +58,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import activeTypeData from "../constants/activeTypeData.js";
+import {activeTypeData} from "../constants/dataList.js";
 export default {
   data() {
     return {

@@ -1,5 +1,16 @@
 <template>
   <div class="wrap">
+    <div class="selectBox">
+      <span>当前周：</span>
+      <el-select v-model="thisWeek" placeholder="请选择">
+        <el-option
+          v-for="(item, index) in 25"
+          :key="index"
+          :value=item>
+          {{item}}
+        </el-option>
+    </el-select>
+    </div>
     <p class="title">上&nbsp;课&nbsp;时&nbsp;间&nbsp;表</p>
     <header>
       <div>
@@ -17,11 +28,12 @@
         </div>
       </div>
     </div>
+    
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { formatHour, formatMinute } from "../../util/getTime.js";
+import { formatHour, formatMinute, getNowTimes, getDistanceDays } from "../../util/getTime.js";
 export default {
   name: "myClass",
   data() {
@@ -46,9 +58,28 @@ export default {
     };
   },
   computed: {
-    ...mapState(["timeList"])
+    ...mapState(["timeList", "thisWeek", "startTime"])
+  },
+  mounted () {
+    this.initWeek(this.startTime, new Date())
   },
   methods: {
+    initWeek(startTime, nowtime) {
+      if (this.startTime) {
+        nowtime = getNowTimes(nowtime)
+        let distanceDays = getDistanceDays(this.startTime, nowtime) // 17
+        console.log(distanceDays)
+        let week = Math.ceil(distanceDays / 7) + 1;
+        this.$store.dispatch('setThisWeek', week)
+      } else { // 用户没有设置开学时间
+        this.$notify({
+          title: '提示',
+          message: '为更好展示课程安排，请到设置中设置开学时间',
+          duration: 5000
+        });
+        return
+      }
+    },
     handerTimeList(timeList) {
       if (timeList) {
         this.schoolTime = [];
@@ -69,6 +100,9 @@ export default {
         this.handerTimeList(val);
       },
       deep: true
+    },
+    startTime (val) {
+      this.initWeek(val, new Date())
     }
   }
 };
