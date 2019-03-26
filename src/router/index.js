@@ -1,4 +1,6 @@
 import VueRouter from 'vue-router'
+import { Loading } from 'element-ui'
+var loadingInstance
 // 课表中心
 const myClass = () => import('../pages/myClass/index.vue')
 const addClass = () => import('../pages/myClass/addClass.vue')
@@ -38,5 +40,13 @@ const router = new VueRouter({
     }
 
   ]
+})
+router.beforeEach((to, from, next) => {
+  loadingInstance = Loading.service({ fullscreen: true });
+  next()
+})
+router.afterEach(to => {
+  loadingInstance.close()
+  window.scrollTo(0, 0)
 })
 export default router

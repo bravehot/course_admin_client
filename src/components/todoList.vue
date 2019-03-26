@@ -6,7 +6,7 @@
       <span v-else>已完成</span>
     </div>
     <div class="todoList_main">
-      <el-form :model="todoList">
+      <el-form :model="todoList" :label-position="labelPosition">
         <el-form-item label="活动名称：" prop="name">
           <el-input v-model="todoList.name" :disabled="isSet" placeholder="请输入活动名称"></el-input>
         </el-form-item>
@@ -62,6 +62,7 @@ import {activeTypeData} from "../constants/dataList.js";
 export default {
   data() {
     return {
+      labelPosition: "top",
       isSet: true,
       isCompleted: false,
       todoList: {
