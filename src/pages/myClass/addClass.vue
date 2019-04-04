@@ -17,15 +17,12 @@
                 required: true, message: '请选择上课星期', trigger: 'blur'
               }"
               >
-                <el-select
-                  v-model="item.classNums[index]" 
-                  placeholder="请选择第几节"
-                >
+                <el-select v-model="item[index].names" placeholder="请选择第几节">
                   <el-option
-                    v-for="(item, index) in 7"
-                    :key="index"
-                    :value="index"
-                    :label="handleClass(index)"
+                    v-for="(item, index1) in 7"
+                    :key="index1"
+                    :value="index1"
+                    :label="handleClass(index1)"
                   />
                 </el-select>
                 <!-- 上课班级用input的远程搜索 -->
@@ -43,7 +40,7 @@
               }"
               >
                 <el-select
-                  v-model="item.classNums"
+                  v-model="item[index].classNames"
                   multiple
                   filterable
                   allow-create
@@ -51,13 +48,13 @@
                   placeholder="请上课班级"
                 >
                   <el-option
-                    v-for="(item, index) in needClassList"
-                    :key="index"
+                    v-for="(item, index1) in needClassList"
+                    :key="index1"
                     :value="item"
                     :label="item"
                   />
                 </el-select>
-                <el-button type='primary' icon='el-icon-plus' circle @click="addClassNames"></el-button>
+                <el-button type="primary" icon="el-icon-plus" circle @click="addClassNames(index)"></el-button>
               </el-form-item>
             </div>
             <el-form-item>
@@ -122,7 +119,7 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      labelPosition: 'left',
+      labelPosition: "left",
       weekData,
       weekList,
       isSelect: true,
@@ -140,7 +137,12 @@ export default {
         name: "",
         classRoom: "",
         classNames: [],
-        week: [],
+        week: [[
+          {
+            names: '',
+            classNames: []
+          }
+        ]],
         num: "",
         start: "",
         end: "",
@@ -154,8 +156,12 @@ export default {
   methods: {
     handleClass,
     handleWeek,
-    addClassNames () { // 添加第几节上课
-      // this.addClass.week.classNames.push([])
+    addClassNames(index) {
+      console.log(index);
+      this.addClass.week[index].push({
+        names: "",
+        classNames: []
+      });
     },
     removeWeek(item) {
       let index = this.addClass.week.indexOf(item);
@@ -171,15 +177,14 @@ export default {
         });
         return;
       }
-      // 添加
-      this.addClass.week.push({
-        classNums: [],
-        key: Date.now()
-      });
-      // this.addClass.classNames.push({
-      //   value: "",
-      //   key: Date.now()
-      // });
+      this.$set(this.addClass.week, this.addClass.week.length, [{names: "", classNames: []}])
+      this.$forceUpdate();
+      // this.addClass.week.push([
+      //   {
+      //     names: "",
+      //     classNames: []
+      //   }
+      // ]);
     },
     selectType() {
       this.isSelect = !this.isSelect;
@@ -192,18 +197,6 @@ export default {
             message: "正在添加,请稍后！！！",
             type: "success"
           });
-          // type1: {
-          //   classRoom: "J7-101"
-          //   start: "第一周"
-          //   end: "第二十五周"
-          //   name: "计算机科学与技术"
-          //   num: ["第一节", "第三节", "第四节"]
-          //   week: ['星期一', '星期四', '星期五']
-          //   weeks: []
-          // }
-          // type2: {
-
-          // }
         } else {
           this.$message({
             message: "请按规范进行填写！！！",
@@ -219,7 +212,8 @@ export default {
     resetWeek(formName) {
       this.$refs[formName].resetFields();
     }
-  }
+  },
+  watch: {}
 };
 </script>
 <style lang="less" scoped>

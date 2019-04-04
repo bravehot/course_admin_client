@@ -69,7 +69,13 @@ export default {
         nowtime = getNowTimes(nowtime)
         let distanceDays = getDistanceDays(this.startTime, nowtime) // 17
         console.log(distanceDays)
-        let week = Math.ceil(distanceDays / 7) + 1;
+        let week;
+        let count = distanceDays / 7
+        if (count > 0) {
+          week = Math.floor(distanceDays / 7) + 1
+        } else {
+          week = Math.floor(distanceDays / 7)
+        }
         this.$store.dispatch('setThisWeek', week)
       } else { // 用户没有设置开学时间
         this.$notify({

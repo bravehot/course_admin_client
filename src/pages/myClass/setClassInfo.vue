@@ -9,7 +9,7 @@
           <div class="block_content">
             <div class="selectTime">
               <span class="demonstration">开学日期：</span>
-              <el-date-picker format="yyyy-MM-dd" v-model="date" type="date" placeholder="请选择开学日期"></el-date-picker>
+              <el-date-picker format="yyyy-MM-dd" :picker-options="pickerOptions" v-model="date" type="date" placeholder="请选择开学日期"></el-date-picker>
             </div>
             <el-button type="primary" @click="confirmDate">确 定</el-button>
           </div>
@@ -46,7 +46,12 @@ export default {
   data() {
     return {
       date: "",
-      needClassList: [] // 需要上课的班级
+      needClassList: [], // 需要上课的班级
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        }
+    },
     };
   },
   methods: {
@@ -55,7 +60,7 @@ export default {
         let startTime = getNowTimes(this.date);
         this.$store.dispatch("setStartTime", startTime);
       } else {
-         this.$message.error('请选择开学时间！')
+        this.$message.error('请选择开学时间！')
       }
     },
     confirmClass () {
