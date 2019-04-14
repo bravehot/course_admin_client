@@ -56,7 +56,7 @@ export default {
   .wrap {
     padding: 50px;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     .top {
       display: flex;
       justify-content: space-around;

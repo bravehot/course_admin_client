@@ -1,6 +1,6 @@
 <template>
   <el-aside>
-    <el-menu @select='selectMenu' unique-opened :router="true" :collapse-transition="true" :default-active=$route.path class="el-menu-vertical-demo"  :collapse="isCollapse">
+    <el-menu  unique-opened :router="true" :collapse-transition="true" :default-active=$route.path  :collapse="isCollapse">
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -48,15 +48,8 @@ export default {
     console.log(this.$route.path) 
   },
   watch: {
-    // '$route': 'setPath'
   },
   methods: {  
-    selectMenu(index, indexPath) {
-      console.log(index, indexPath)
-    },
-    setPath() {
-      this.path = this.$route.path
-    }
   }
 
 }
@@ -64,6 +57,9 @@ export default {
 <style lang="less" scoped>
   .el-aside {
     margin-top: 2px;
+  }
+  .el-menu {
+    height: 100%
   }
 
 </style>

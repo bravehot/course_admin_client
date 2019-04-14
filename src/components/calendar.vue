@@ -10,14 +10,12 @@
         <span v-for="(item, index ) in weekData" :key="index">{{item}}</span>
       </div>
       <div class="calendar_m_content">
-        <span 
-          v-for="(item, index) in renderData(year, month)" 
-            :key="index" 
-              @click="clickDays(item, index)"
-              :class="[{hot: item.content === day}, {isClick: index === active}]"
-              >
-              {{item.content}}
-        </span>
+        <span
+          v-for="(item, index) in renderData(year, month)"
+          :key="index"
+          @click="clickDays(item, index)"
+          :class="[{hot: item.content === day}, {isClick: index === active}]"
+        >{{item.content}}</span>
       </div>
     </div>
   </div>
@@ -26,27 +24,27 @@
 export default {
   data() {
     return {
-      active: '',
-      weekData: ['日', '一', '二', '三', '四', '五', '六'],
+      active: "",
+      weekData: ["日", "一", "二", "三", "四", "五", "六"],
       year: new Date().getFullYear(),
       month: new Date().getMonth(),
       day: new Date().getDate()
     };
   },
-  mounted () {
-    this.renderData(this.year, this.month)
+  mounted() {
+    this.renderData(this.year, this.month);
   },
   methods: {
-    clickDays (item, index) {
-      this.active = index
+    clickDays(item, index) {
+      this.active = index;
       let select = {
         year: this.year,
         month: this.month + 1,
         day: item.content
-      }
-      this.$store.dispatch('selectDayData', select)
+      };
+      this.$store.dispatch("selectDayData", select);
     },
-    renderData (year, month) { 
+    renderData(year, month) {
       // 每个月的天数
       let monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
       // 判断是否是闰月
@@ -54,44 +52,47 @@ export default {
         monthDays[1] = 29;
       }
       // 计算当前月份第一天是星期几，根据此值就可以在前面渲染几个空数据
-      let targetDay = new Date(year, month, 1).getDay() // 5
-      let targetList = []
+      let targetDay = new Date(year, month, 1).getDay(); // 5
+      let targetList = [];
       // 填充当前月份的空白区域
       for (let i = 0; i < targetDay; i++) {
         let obj = {
-          type: 'pre',
-          content: '',
-        }
-        targetList.push(obj)
+          type: "pre",
+          content: ""
+        };
+        targetList.push(obj);
       }
       // 填充需要渲染的文字区域
       for (let i = 0; i < monthDays[month]; i++) {
         let obj = {
-          type: 'normal',
+          type: "normal",
           content: i + 1
-        }
-        targetList.push(obj)
+        };
+        targetList.push(obj);
       }
-      return targetList
+      return targetList;
     },
-    chooseMouth(type) { // 点击选择月份
+    chooseMouth(type) {
+      let month = this.month
+      // 点击选择月份
       switch (type) {
-        case 'pre':
-          this.month--;
-          if (this.month === 0) {
+        case "pre":
+          this.month--
+          if (month === 0) {
             this.year--;
-            this.month = 12;
+            this.month = 11
           }
           break;
-        case 'next':
+        case "next":
           this.month++;
-          if (this.month === 13) {
+          console.log(month, this.month);
+          if (this.month === 12) {
             this.year++;
-            this.month = 1;
+            this.month = 0;
           }
           break;
       }
-    },
+    }
   }
 };
 </script>
@@ -124,9 +125,9 @@ export default {
         border: 1px solid #333333;
         border-right: none;
         height: 30px;
-        font: bold 12px/30px '微软雅黑'; 
+        font: bold 12px/30px "微软雅黑";
       }
-      &>span:last-child {
+      & > span:last-child {
         border-right: 1px solid #333333;
       }
     }
@@ -138,14 +139,14 @@ export default {
         text-align: center;
         width: calc(100% / 7);
         height: 90px;
-        font: bold 16px/90px '微软雅黑';
+        font: bold 16px/90px "微软雅黑";
         &.hot {
-          background: #007FFF;
+          background: #007fff;
           border-radius: 20px;
           color: #ffffff;
         }
         &.isClick {
-          background: #E6A23C;
+          background: #e6a23c;
           border-radius: 20px;
           color: #ffffff;
         }

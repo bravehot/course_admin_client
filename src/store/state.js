@@ -4,5 +4,5 @@ export default {
   timeList: [], // 上课时间列表
   thisWeek: '', // 当前周数
   startTime: '', // 开学日期
-  needClassList: [], // 需要上课的班级
+  needClassList: ['计算机1班', '计算机2班', '计算机3班', '计算机4班', '计算机5班', '计算机6班', '计算机7班', '计算机8班', '计算机9班'], // 需要上课的班级
 }

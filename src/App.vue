@@ -11,7 +11,6 @@
           </keep-alive>
         </el-container>
       </el-container>
-       <el-footer>脚底</el-footer>
   </el-container>
 </template>
 
@@ -30,5 +29,8 @@ export default {
 <style lang="less" scoped>
   .el-header {
     padding: 0;
+  }
+  .el-container {
+    height: 100%vh;
   }
 </style>

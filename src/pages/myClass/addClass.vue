@@ -8,60 +8,9 @@
         <el-input v-model="addClass.classRoom" placeholder="请输入上课教室"></el-input>
       </el-form-item>
       <el-form-item label="上课星期：" required>
-        <div class="weekBox">
-          <el-form ref="weekForm" label-width="80px" label-position="left">
-            <div v-for="(item, index) in addClass.week" :key="index" class="weekBoxContent">
-              <el-form-item
-                :label="handleWeek(index+1)"
-                :rules="{
-                required: true, message: '请选择上课星期', trigger: 'blur'
-              }"
-              >
-                <el-select v-model="item[index].names" placeholder="请选择第几节">
-                  <el-option
-                    v-for="(item, index1) in 7"
-                    :key="index1"
-                    :value="index1"
-                    :label="handleClass(index1)"
-                  />
-                </el-select>
-                <!-- 上课班级用input的远程搜索 -->
-                <!-- <el-button
-                type="danger"
-                @click.prevent="removeWeek(item)"
-                class="delect"
-                size="small"
-                >删除</el-button>-->
-              </el-form-item>
-              <el-form-item
-                label="上课班级"
-                :rules="{
-                required: true, message: '请输入上课班级', trigger: 'blur'
-              }"
-              >
-                <el-select
-                  v-model="item[index].classNames"
-                  multiple
-                  filterable
-                  allow-create
-                  default-first-option
-                  placeholder="请上课班级"
-                >
-                  <el-option
-                    v-for="(item, index1) in needClassList"
-                    :key="index1"
-                    :value="item"
-                    :label="item"
-                  />
-                </el-select>
-                <el-button type="primary" icon="el-icon-plus" circle @click="addClassNames(index)"></el-button>
-              </el-form-item>
-            </div>
-            <el-form-item>
-              <el-button type="primary" @click="addWeek">增加</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
+        <el-tabs v-model="activeWeek" type="border-card" @tab-click="handleClick">
+          <el-tab-pane :label="item" :name="item" v-for="(item, index) in weekList" :key=index><addWeekInfo :week=addClass.week :indexs=index /></el-tab-pane>
+        </el-tabs>
       </el-form-item>
       <el-form-item label="上课周：" class="week" prop="weeks">
         <div v-if="isSelect" class="selectBox">
@@ -115,10 +64,12 @@
 <script>
 import { classData, weekData, weekList } from "../../constants/dataList.js";
 import { handleWeek, handleClass } from "../../util/getTime.js";
+import addWeekInfo from '../../components/addWeekInfo'
 import { mapState } from "vuex";
 export default {
   data() {
     return {
+      activeWeek: '星期一',
       labelPosition: "left",
       weekData,
       weekList,
@@ -137,12 +88,9 @@ export default {
         name: "",
         classRoom: "",
         classNames: [],
-        week: [[
-          {
-            names: '',
-            classNames: []
-          }
-        ]],
+        week: [
+          {}, {}, {}, {}, {}, {}, {}
+        ],
         num: "",
         start: "",
         end: "",
@@ -156,36 +104,13 @@ export default {
   methods: {
     handleClass,
     handleWeek,
-    addClassNames(index) {
-      console.log(index);
-      this.addClass.week[index].push({
-        names: "",
-        classNames: []
-      });
-    },
     removeWeek(item) {
       let index = this.addClass.week.indexOf(item);
       if (index !== -1) {
         this.addClass.week.splice(index, 1);
       }
     },
-    addWeek() {
-      if (this.addClass.week.length === 7) {
-        this.$message({
-          message: "一周只有7天",
-          type: "warning"
-        });
-        return;
-      }
-      this.$set(this.addClass.week, this.addClass.week.length, [{names: "", classNames: []}])
-      this.$forceUpdate();
-      // this.addClass.week.push([
-      //   {
-      //     names: "",
-      //     classNames: []
-      //   }
-      // ]);
-    },
+    handleClick() {},
     selectType() {
       this.isSelect = !this.isSelect;
     },
@@ -213,7 +138,10 @@ export default {
       this.$refs[formName].resetFields();
     }
   },
-  watch: {}
+  watch: {},
+  components: {
+    addWeekInfo
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -223,7 +151,7 @@ export default {
   box-shadow: 0 0 10px rgba(208, 208, 208, 0.5);
   margin: 50px auto 0;
   & > .el-form {
-    width: 410px;
+    // width: 410px;
   }
   .el-input,
   .el-select {
@@ -232,9 +160,6 @@ export default {
   .week {
     .selectBox {
       overflow: hidden;
-      .line {
-        text-align: center;
-      }
     }
     .el-select {
       width: 140px;
