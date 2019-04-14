@@ -31,6 +31,6 @@ export default {
     padding: 0;
   }
   .el-container {
-    height: 100%vh;
+    height: auto;
   }
 </style>
