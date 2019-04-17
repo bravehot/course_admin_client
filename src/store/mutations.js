@@ -1,4 +1,7 @@
 export default {
+  handleLogin(state, username) {
+    state.username = username
+  },
   changeCollapse (state) {
     state.isCollapse = !state.isCollapse
   },

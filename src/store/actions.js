@@ -1,4 +1,13 @@
+import {handleLogin} from '../api/index'
 export default {
+  async handleLogin ({commit}, data) { // 登录
+    const res = await handleLogin(data)
+    if (res.code === 200) {
+      let {token, username} = res.data
+      document.cookie = `token=${token}`
+      commit('handleLogin', username)
+    } 
+  },
   changeCollapse({commit}) { // 控制左侧导航栏
     commit('changeCollapse')
   },

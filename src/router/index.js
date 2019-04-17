@@ -7,11 +7,14 @@ const addClass = () => import('../pages/myClass/addClass.vue')
 const setClassInfo = () => import('../pages/myClass/setClassInfo.vue')
 const addMemo = () => import('../pages/memo/addMemo.vue')
 const myMemo = () => import('../pages/memo/index.vue')
+// 登录
+const login = () => import('../pages/login/index.vue')
 const router = new VueRouter({
   routes: [
     {
       path: '/',
-      redirect: '/class'
+      redirect: '/login',
+      component: login
     },
     {
       path: '/class',

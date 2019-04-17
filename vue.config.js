@@ -1,6 +1,4 @@
 module.exports = {
-  publicPath: './',
-  configureWebpack: {
-    
-  }
+  // publicPath: './',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
 }
