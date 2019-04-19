@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import { handleLogin } from "../../api/index.js";
 export default {
   data() {
     return {
@@ -34,7 +35,7 @@ export default {
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' }
+          { min: 5, max: 8, message: "长度在 5 到 8 个字符", trigger: "blur" }
         ],
         password: { required: true, message: "请输入密码", trigger: "blur" }
       }
@@ -42,13 +43,26 @@ export default {
   },
   methods: {
     handleLogin(formName, type) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate(async valid => {
         if (valid) {
-          this.$store.dispatch("handleLogin", { type, ...this.loginForm });
+          let result = await handleLogin({ type, ...this.loginForm })
+          if (result.code === 200) {
+            // 登录成功
+            let { token, username } = result.data
+            document.cookie = `token=${token}`
+            this.$store.dispatch("handleLogin", username)
+            this.$router.push('/class')
+          } else {
+            this.$message.error("用户名或密码错误！")
+            this.resetForm('formName')
+          }
         } else {
           return false;
         }
       });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
     }
   }
 };
