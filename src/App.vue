@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import reset from "./assets/css/reset.css";
-import menuHead from "./components/menuHead";
-import menuNavLeft from "./components/menuNavLeft";
-import Login from "../src/pages/login";
+import reset from "./assets/css/reset.css"
+import menuHead from "./components/menuHead"
+import menuNavLeft from "./components/menuNavLeft"
+import Login from "../src/pages/login"
 import { getCookie } from './util/handleCookie.js'
 export default {
   name: "app",

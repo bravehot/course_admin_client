@@ -2,13 +2,12 @@
   <div class="wrap">
     <div class="selectBox">
       <span>当前周：</span>
-      <el-select v-model="thisWeek" placeholder="请选择">
+      <el-select v-model="thisWeeks" placeholder="请选择" @change='selectWeek'>
         <el-option
           v-for="(item, index) in 25"
           :key="index"
-          :value=item>
-          {{item}}
-        </el-option>
+          :value="item"
+          :label="'第' + item + '周'"/>
     </el-select>
     </div>
     <p class="title">上&nbsp;课&nbsp;时&nbsp;间&nbsp;表</p>
@@ -33,20 +32,14 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { formatHour, formatMinute, getNowTimes, getDistanceDays } from "../../util/getTime.js";
+import { formatHour, formatMinute, getNowTimes, getDistanceDays } from "../../util/getTime.js"
+import { weekList } from '../../constants/dataList.js'
 export default {
   name: "myClass",
   data() {
     return {
-      weekList: [
-        "星期一",
-        "星期二",
-        "星期三",
-        "星期四",
-        "星期五",
-        "星期六",
-        "星期日"
-      ],
+      thisWeeks: '',
+      weekList,
       schoolTime: [
         "08:00 —— 09:30",
         "10:00 —— 11:30",
@@ -64,6 +57,9 @@ export default {
     this.initWeek(this.startTime, new Date())
   },
   methods: {
+    selectWeek() {
+      console.log(11)
+    },
     initWeek(startTime, nowtime) {
       if (this.startTime) {
         nowtime = getNowTimes(nowtime)
@@ -109,6 +105,9 @@ export default {
     },
     startTime (val) {
       this.initWeek(val, new Date())
+    },
+    thisWeek(val) {
+      this.thisWeeks = val
     }
   }
 };

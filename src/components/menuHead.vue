@@ -8,21 +8,15 @@
     ></i>
     <p class="describe">山东科技大学 — 课表管理中心</p>
     <div class="avater">
-      <el-dropdown>
+      <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
-          您好 {{teacherName}} 老师
+          您好 {{username}} 老师
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
-            <router-link to="/setClassInfo">设置</router-link>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <router-link to="/setClassInfo">更改密码</router-link>
-          </el-dropdown-item>
-          <el-dropdown-item >
-            <span @click="outLogin">退出登录</span>
-            </el-dropdown-item>
+          <el-dropdown-item command="setting">设置</el-dropdown-item>
+          <el-dropdown-item command="setPwd">更改密码</el-dropdown-item>
+          <el-dropdown-item command="outLogin">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -30,32 +24,40 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { getCookie, deleteCookie } from '../util/handleCookie.js'
+import { getCookie, deleteCookie } from "../util/handleCookie.js";
 export default {
   name: "menuHead",
   data() {
-    return {
-      teacherName: ''
-    };
+    return {};
   },
   computed: {
     ...mapState(["isCollapse", "username"])
   },
   methods: {
+    handleCommand(command) {
+      switch (command) {
+        case "setting":
+          this.$router.push('/setClassInfo')
+          break;
+        case "setPwd":
+          this.$router.push('/setClassInfo')
+          break;
+        case "outLogin":
+          this.outLogin()
+          break;
+        default:
+          break;
+      }
+    },
     handleLeftNav() {
       this.$store.dispatch("changeCollapse");
     },
-    outLogin () { // 退出登录
-      if (getCookie('token')) {
-        deleteCookie('token') 
-        this.$router.push('/')
+    outLogin() {
+      // 退出登录
+      if (getCookie("token")) {
+        deleteCookie("token");
+        this.$router.push("/");
       }
-    }
-  },
-  watch: {
-    username(val) {
-      console.log(val)
-      this.teacherName = val
     }
   }
 };
@@ -72,7 +74,7 @@ div.wrap {
   & > i {
     cursor: pointer;
     line-height: 90px;
-    margin: 0 60px 0 20px;
+    margin: 0 60px 0 80px;
     transition: transform 1s;
     &.rotate {
       transform: rotate(90deg);
@@ -99,6 +101,10 @@ div.wrap {
         font-weight: bold;
       }
     }
+  }
+  .el-dropdown-link{
+    font-size: 16px;
+    line-height: 20px;
   }
 }
 </style>
