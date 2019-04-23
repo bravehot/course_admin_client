@@ -1,7 +1,7 @@
 <template>
   <el-container id="app">
     <div v-if="$route.path !== '/login'">
-      <el-header height='90px'>
+      <el-header height="90px">
         <menuHead/>
       </el-header>
       <el-container>
@@ -18,25 +18,25 @@
 </template>
 
 <script>
-import reset from "./assets/css/reset.css"
-import menuHead from "./components/menuHead"
-import menuNavLeft from "./components/menuNavLeft"
-import Login from "../src/pages/login"
-import { getCookie } from './util/handleCookie.js'
+import reset from "./assets/css/reset.css";
+import menuHead from "./components/menuHead";
+import menuNavLeft from "./components/menuNavLeft";
+import Login from "../src/pages/login";
+import { getCookie } from "./util/handleCookie.js";
 export default {
   name: "app",
-  mounted () {
-    this.ishaveToken()
+  mounted() {
+    this.ishaveToken();
   },
   methods: {
     ishaveToken() { // 判断是否自动登录
-      let token = getCookie('token')
+      let token = getCookie("token");
       if (token) {
-        this.$router.push('/class')
+        this.$router.push("/class");
       } else {
-        this.$router.push('/login')
+        this.$router.push("/login");
       }
-    },
+    }
   },
   components: {
     menuHead,

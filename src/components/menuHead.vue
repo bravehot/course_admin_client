@@ -10,7 +10,7 @@
     <div class="avater">
       <el-dropdown @command="handleCommand">
         <span class="el-dropdown-link">
-          您好 {{username}} 老师
+          您好 {{names}} 老师
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -27,23 +27,36 @@ import { mapState } from "vuex";
 import { getCookie, deleteCookie } from "../util/handleCookie.js";
 export default {
   name: "menuHead",
-  data() {
-    return {};
+  data () {
+    return {
+      names: localStorage.getItem("username")
+    }
   },
   computed: {
     ...mapState(["isCollapse", "username"])
   },
+  mounted() {
+    this.initUsername();
+  },
   methods: {
+    initUsername() {
+      if (this.$store.state.username) {
+        let username = this.$store.state.username;
+        localStorage.setItem("username", username);
+        this.names = localStorage.getItem("username");
+      }
+    },
     handleCommand(command) {
       switch (command) {
         case "setting":
-          this.$router.push('/setClassInfo')
+          this.$router.push("/setClassInfo");
           break;
         case "setPwd":
-          this.$router.push('/setClassInfo')
+          this.$router.push("/setClassInfo");
           break;
         case "outLogin":
-          this.outLogin()
+          this.outLogin();
+          localStorage.removeItem("username");
           break;
         default:
           break;
@@ -102,7 +115,7 @@ div.wrap {
       }
     }
   }
-  .el-dropdown-link{
+  .el-dropdown-link {
     font-size: 16px;
     line-height: 20px;
   }

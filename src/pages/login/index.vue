@@ -10,7 +10,7 @@
         :rules="rules"
       >
         <el-form-item label="用 户 名：" prop="username">
-          <el-input v-model="loginForm.username" ></el-input>
+          <el-input v-model="loginForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密 码：" prop="password">
           <el-input v-model="loginForm.password" type="password"></el-input>
@@ -43,21 +43,21 @@ export default {
   },
   methods: {
     submit() {
-      console.log(1111)
+      console.log(1111);
     },
     handleLogin(formName, type) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
-          let result = await handleLogin({ type, ...this.loginForm })
+          let result = await handleLogin({ type, ...this.loginForm });
           if (result.code === 200) {
             // 登录成功
-            let { token, username } = result.data
-            document.cookie = `token=${token}`
+            let { token, username } = result.data;
+            document.cookie = `token=${token}`; // 设置token
             this.$store.dispatch("handleLogin", username)
             this.$router.push('/class')
           } else {
-            this.$message.error("用户名或密码错误！")
-            this.resetForm('formName')
+            this.$message.error("用户名或密码错误！");
+            this.resetForm("formName");
           }
         } else {
           return false;

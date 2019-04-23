@@ -9,7 +9,13 @@
           <div class="block_content">
             <div class="selectTime">
               <span class="demonstration">开学日期：</span>
-              <el-date-picker format="yyyy-MM-dd" :picker-options="pickerOptions" v-model="date" type="date" placeholder="请选择开学日期"></el-date-picker>
+              <el-date-picker
+                format="yyyy-MM-dd"
+                :picker-options="pickerOptions"
+                v-model="date"
+                type="date"
+                placeholder="请选择开学日期"
+              ></el-date-picker>
             </div>
             <el-button type="primary" @click="confirmDate">确 定</el-button>
           </div>
@@ -35,7 +41,21 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="定时任务补偿"></el-tab-pane>
+      <el-tab-pane label="修改密码">
+        <div class="setPwd">
+          <el-form ref="setPwd" :model="setPwd" label-width="100px" label-position='left'>
+            <el-form-item label="当前密码：">
+              <el-input v-model="setPwd.pwd" placeholder="请验证当前密码："></el-input>
+            </el-form-item>
+            <el-form-item label="新密码：">
+              <el-input v-model="setPwd.newPwd" placeholder="请输入新密码：" :disabled="isSetPwd"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码：">
+              <el-input v-model="setPwd.againPwd" placeholder="请再输一次新密码：" :disabled="isSetPwd"></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -45,31 +65,36 @@ import setTimeClass from "../../components/setTimeClass";
 export default {
   data() {
     return {
+      isSetPwd: true,
       date: "",
       needClassList: [], // 需要上课的班级
+      setPwd: {
+        pwd: '',
+        newPwd: '',
+        againPwd: ''
+      },
       pickerOptions: {
         disabledDate(time) {
           return time.getTime() > Date.now();
         }
-    },
+      }
     };
   },
   methods: {
-    confirmDate () {
+    confirmDate() {
       if (this.date) {
         let startTime = getNowTimes(this.date);
         this.$store.dispatch("setStartTime", startTime);
       } else {
-        this.$message.error('请选择开学时间！')
+        this.$message.error("请选择开学时间！");
       }
     },
-    confirmClass () {
+    confirmClass() {
       if (this.needClassList.length) {
         this.$store.dispatch("setNeedClass", this.needClassList);
       } else {
-        this.$message.error('请输入需要上课班级！')
+        this.$message.error("请输入需要上课班级！");
       }
-
     }
   },
   components: {
@@ -85,11 +110,13 @@ export default {
   margin: 20px 20px;
   padding: 20px 40px;
   box-sizing: border-box;
-  .block, .setClass {
+  .block,
+  .setClass,.setPwd {
     width: 500px;
     height: 300px;
     margin: 50px auto 0;
-    .block_content, .setClass_content {
+    .block_content,
+    .setClass_content {
       display: flex;
       flex-direction: column;
       align-items: center;
