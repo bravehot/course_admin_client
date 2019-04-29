@@ -15,7 +15,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="setting">设置</el-dropdown-item>
-          <el-dropdown-item command="setPwd">更改密码</el-dropdown-item>
+          <el-dropdown-item command="setInfo">更改信息</el-dropdown-item>
           <el-dropdown-item command="outLogin">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -51,7 +51,7 @@ export default {
         case "setting":
           this.$router.push("/setClassInfo");
           break;
-        case "setPwd":
+        case "setInfo":
           this.$router.push("/setClassInfo");
           break;
         case "outLogin":

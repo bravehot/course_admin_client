@@ -41,18 +41,24 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="修改密码">
-        <div class="setPwd">
-          <el-form ref="setPwd" :model="setPwd" label-width="100px" label-position='left'>
+      <el-tab-pane label="修改信息">
+        <div class="setInfo">
+          <el-form ref="setPwd" :model="setPwd" label-width="100px" label-position="left">
+            <el-form-item label="用户名：" :rules="[ { min: 5, max: 8, message: '长度在 5 到 8 个字符', trigger: 'blur' } ]">
+              <el-input v-model="setPwd.names" placeholder="请输入新的用户名："></el-input>
+            </el-form-item>
             <el-form-item label="当前密码：">
-              <el-input v-model="setPwd.pwd" placeholder="请验证当前密码："></el-input>
+              <el-input v-model="setPwd.pwd" placeholder="请验证当前密码：" type="password" @blur='checkPassword'></el-input>
             </el-form-item>
             <el-form-item label="新密码：">
               <el-input v-model="setPwd.newPwd" placeholder="请输入新密码：" :disabled="isSetPwd"></el-input>
             </el-form-item>
             <el-form-item label="确认密码：">
-              <el-input v-model="setPwd.againPwd" placeholder="请再输一次新密码：" :disabled="isSetPwd"></el-input>
+              <el-input v-model="setPwd.againPwd" placeholder="请再输一次新密码：" :disabled="isSetPwd" @blur='checkNewPwd'></el-input>
             </el-form-item>
+            <div class="buttonBox">
+              <el-button type="primary" @click="handleInfo">修&nbsp;&nbsp;&nbsp;改</el-button>
+            </div>
           </el-form>
         </div>
       </el-tab-pane>
@@ -60,7 +66,9 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import { getNowTimes } from "../../util/getTime.js";
+import { mudificationPwd, setUserInfo } from '../../api/index.js'
 import setTimeClass from "../../components/setTimeClass";
 export default {
   data() {
@@ -69,9 +77,10 @@ export default {
       date: "",
       needClassList: [], // 需要上课的班级
       setPwd: {
-        pwd: '',
-        newPwd: '',
-        againPwd: ''
+        names: "",
+        pwd: "",
+        newPwd: "",
+        againPwd: ""
       },
       pickerOptions: {
         disabledDate(time) {
@@ -80,7 +89,22 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState(['username'])
+  },
   methods: {
+    handleInfo() {
+      // 修改信息请求
+    },
+    // pwd check again
+    checkNewPwd() {
+
+    },
+    // verification pwd
+    async checkPassword () {
+      let username = localStorage.getItem("username")
+      let result = await mudificationPwd()
+    },
     confirmDate() {
       if (this.date) {
         let startTime = getNowTimes(this.date);
@@ -111,7 +135,8 @@ export default {
   padding: 20px 40px;
   box-sizing: border-box;
   .block,
-  .setClass,.setPwd {
+  .setClass,
+  .setInfo {
     width: 500px;
     height: 300px;
     margin: 50px auto 0;
@@ -123,6 +148,15 @@ export default {
       .el-button {
         width: 150px;
         margin: 30px 0;
+      }
+    }
+  }
+  .setInfo {
+    .buttonBox {
+      button {
+        font-size: 20px;
+        display: block;
+        margin: 0 auto;
       }
     }
   }

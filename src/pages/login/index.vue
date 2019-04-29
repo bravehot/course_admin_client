@@ -42,9 +42,6 @@ export default {
     };
   },
   methods: {
-    submit() {
-      console.log(1111);
-    },
     handleLogin(formName, type) {
       this.$refs[formName].validate(async valid => {
         if (valid) {
@@ -57,7 +54,7 @@ export default {
             this.$router.push('/class')
           } else {
             this.$message.error("用户名或密码错误！");
-            this.resetForm("formName");
+            this.resetForm(formName);
           }
         } else {
           return false;

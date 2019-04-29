@@ -4,10 +4,15 @@
  */
 import ajax from './ajax'
 const BASE_URL = 'http://localhost:3000/'
-
+// login register 
 const handleLogin = (data) => ajax(`${BASE_URL}login`, data, 'post')
-
+// setUserInfo 
+const setUserInfo = (data) => ajax(`${BASE_URL}setInfo`, data, 'post')
+// mudification aright pwd
+const mudificationPwd = (data) => ajax(`${BASE_URL}mudificationPwd`, data, 'post')
 export {
-  handleLogin
+  handleLogin,
+  setUserInfo,
+  mudificationPwd
 }
  
