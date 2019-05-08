@@ -50,9 +50,9 @@
           default-first-option
           placeholder="请选择第几周上课"
         >
-          <el-option v-for="(item, index) in weekData" :key="index" :value="item">{{item}}</el-option>
+          <el-option v-for="(item, index) in 25" :key="index" :value="item" :label="'第' + item + '周'"/>
         </el-select>
-        <el-button type="info" size="small" @click="selectType" class="selectButton">切换选择模式</el-button>
+        <!-- <el-button type="info" size="small" @click="selectType" class="selectButton">切换选择模式</el-button> -->
       </el-form-item>
       <div class="buttonBox">
         <el-button type="primary" @click="submitData('classForm')">提交</el-button>
@@ -73,25 +73,22 @@ export default {
       labelPosition: "left",
       weekData,
       weekList,
-      isSelect: true,
+      isSelect: false,
       rules: {
         name: [{ required: true, message: "请输入课程名称", trigger: "blur" }],
         classRoom: [
           { required: true, message: "请输入上课教室", trigger: "blur" }
         ],
-        num: [{ required: true, message: "请选择第几节上课", trigger: "blur" }],
-        weeks: [{ required: true, message: "请选择上课周", trigger: "blur" }],
-        start: [{ required: true, message: "请选择开始周", trigger: "change" }],
-        end: [{ required: true, message: "请选择结束周", trigger: "change" }]
+        weeks: [{ required: !this.isSelect, message: "请选择上课周", trigger: "blur" }],
+        // start: [{ required: this.isSelect, message: "请选择开始周", trigger: "blur" }],
+        // end: [{ required: this.isSelect, message: "请选择结束周", trigger: "blur" }]
       },
       addClass: {
         name: "",
         classRoom: "",
-        classNames: [],
         week: [
           {}, {}, {}, {}, {}, {}, {}
         ],
-        num: "",
         start: "",
         end: "",
         weeks: ""
@@ -117,7 +114,8 @@ export default {
     submitData(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.addClass);
+          let username = localStorage.getItem("username")
+          this.$store.dispatch('setTeacherClass', {username, ...this.addClass})
           this.$message({
             message: "正在添加,请稍后！！！",
             type: "success"

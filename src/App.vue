@@ -27,6 +27,7 @@ export default {
   name: "app",
   mounted() {
     this.ishaveToken();
+    this.getUser()
   },
   methods: {
     ishaveToken() { // 判断是否自动登录
@@ -36,6 +37,9 @@ export default {
       } else {
         this.$router.push("/login");
       }
+    },
+    getUser() {
+      this.$store.dispatch('getUserInfo')
     }
   },
   components: {

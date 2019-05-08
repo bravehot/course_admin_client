@@ -1,4 +1,4 @@
-// import { handleLogin } from '../api/index'
+import { setTeacherClass, setStartTime, getUserInfo } from '../api/index'
 export default {
   handleLogin({ commit }, username) { // 登录
     commit('handleLogin', username)
@@ -15,10 +15,25 @@ export default {
   setThisWeek({ commit }, thisWeek) { // 设置当前周
     commit('setThisWeek', thisWeek)
   },
-  setStartTime({ commit }, startTime) { // 设置开学时间
-    commit('setStartTime', startTime)
-  },
   setNeedClass({ commit }, needClassList) { // 设置需要上课的班级
     commit('setNeedClass', needClassList)
+  },
+  async getUserInfo({ commit }) {
+    let result = await getUserInfo()
+    if (result.code === 200) {
+      let {classNames, classTimes, startTime, username} = result.data
+      commit('setStartTime', startTime)
+    }
+  },
+  async setStartTime({ commit }, startTime) { // 设置开学时间
+    let result = await setStartTime({startTime})
+    if (result.code === 200){
+      commit('setStartTime', startTime)
+    }
+  },
+  async setTeacherClass({ commit }, teacherClass) { // 设置教师上课信息
+    let result = await setTeacherClass(teacherClass)
+    // console.log(result)
+    // commit('setTeacherClass', teacherClass)
   }
 }

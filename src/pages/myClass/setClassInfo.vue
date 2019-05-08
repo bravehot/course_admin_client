@@ -90,7 +90,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(['username'])
+    ...mapState(['startTime'])
+  },
+  mounted () {
+    this.date = this.startTime
   },
   methods: {
     handleInfo() {
