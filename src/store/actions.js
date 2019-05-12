@@ -39,7 +39,6 @@ export default {
   async getThisWeekInfo({commit}, weeksName) { // 获取当前周的信息
     let result = await getThisWeekInfo(weeksName)
     if (result.code === 200) {
-      console.log(result)
       commit('getThisWeekInfo', result.data)
     }
   }

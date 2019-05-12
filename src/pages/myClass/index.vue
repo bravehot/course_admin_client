@@ -2,13 +2,14 @@
   <div class="wrap">
     <div class="selectBox">
       <span>当前周：</span>
-      <el-select v-model="thisWeeks" placeholder="请选择" @change='selectWeek'>
+      <el-select v-model="thisWeeks" placeholder="请选择" @change="selectWeek">
         <el-option
           v-for="(item, index) in 25"
           :key="index"
           :value="item"
-          :label="'第' + item + '周'"/>
-    </el-select>
+          :label="'第' + item + '周'"
+        />
+      </el-select>
     </div>
     <p class="title">上&nbsp;课&nbsp;时&nbsp;间&nbsp;表</p>
     <header>
@@ -26,19 +27,72 @@
           <span>{{item.split(' ')[2]}}</span>
         </div>
       </div>
+      <div class="monday content" >
+        <div v-for="(item, index) in oneWeekInfo.MondayInfo"  :key="index" >
+          <p v-if="item.name">{{item.name[0]}}</p>
+          <p v-if="item.roomName">{{item.roomName[0]}}</p>
+          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+        </div>
+      </div>
+      <div class="tuesday content" >
+        <div v-for="(item, index) in oneWeekInfo.TuesdayInfo" :key="index">
+          <p v-if="item.name">{{item.name[0]}}</p>
+          <p v-if="item.roomName">{{item.roomName[0]}}</p>
+          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+        </div>
+      </div>
+      <div class="wednesday content">
+        <div  v-for="(item, index) in oneWeekInfo.WednesdayInfo" :key="index">
+          <p v-if="item.name">{{item.name[0]}}</p>
+          <p v-if="item.roomName">{{item.roomName[0]}}</p>
+          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+        </div>
+      </div>
+      <div class="thursday content">
+        <div  v-for="(item, index) in oneWeekInfo.ThursdayInfo" :key="index">
+          <p v-if="item.name">{{item.name[0]}}</p>
+          <p v-if="item.roomName">{{item.roomName[0]}}</p>
+          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+        </div>
+      </div>
+      <div class="friday content">
+        <div  v-for="(item, index) in oneWeekInfo.FridayInfo" :key="index">
+          <p v-if="item.name">{{item.name[0]}}</p>
+          <p v-if="item.roomName">{{item.roomName[0]}}</p>
+          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+        </div>
+      </div>
+      <div class="saturday content">
+        <div v-for="(item, index) in oneWeekInfo.SaturdayInfo" :key="index">
+          <p v-if="item.name">{{item.name[0]}}</p>
+          <p v-if="item.roomName">{{item.roomName[0]}}</p>
+          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+        </div>
+      </div>
+      <div class="sunday content">
+        <div v-for="(item, index) in oneWeekInfo.SundayInfo" :key="index">
+          <p v-if="item.name">{{item.name[0]}}</p>
+          <p v-if="item.roomName">{{item.roomName[0]}}</p>
+          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+        </div>
+      </div>
     </div>
-    
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { formatHour, formatMinute, getNowTimes, getDistanceDays } from "../../util/getTime.js"
-import { weekList } from '../../constants/dataList.js'
+import {
+  formatHour,
+  formatMinute,
+  getNowTimes,
+  getDistanceDays
+} from "../../util/getTime.js";
+import { weekList } from "../../constants/dataList.js";
 export default {
   name: "myClass",
   data() {
     return {
-      thisWeeks: '',
+      thisWeeks: "",
       weekList,
       schoolTime: [
         "08:00 —— 09:30",
@@ -47,52 +101,54 @@ export default {
         "16:00 —— 17:30",
         "18:30 —— 20:00",
         "20:00 —— 21:30"
-      ]
+      ],
+      oneWeekInfo: {}
     };
   },
   computed: {
-    ...mapState(["timeList", "thisWeek", "startTime"])
+    ...mapState(["timeList", "thisWeek", "startTime", "thisWeekInfo"])
   },
-  mounted () {
-    this.initWeek(this.startTime, new Date())
+  mounted() {
+    this.initWeek(this.startTime, new Date());
   },
   methods: {
-    getThisWeekInfo() { // 获取周的上课信息
-      console.log(this.thisWeeks)
+    getThisWeekInfo() {
+      // 获取周的上课信息
+      console.log(this.thisWeeks);
       if (this.thisWeeks) {
-        this.$store.dispatch('getThisWeekInfo', this.thisWeeks)
+        this.$store.dispatch("getThisWeekInfo", this.thisWeeks);
       } else {
         this.$notify({
-          title: '提示',
-          message: '为更好展示课程安排，请到设置中设置开学时间',
+          title: "提示",
+          message: "为更好展示课程安排，请到设置中设置开学时间",
           duration: 5000
         });
       }
-
     },
     selectWeek() {
-      this.getThisWeekInfo()
+      this.getThisWeekInfo();
     },
     initWeek(startTime, nowtime) {
       if (this.startTime) {
-        nowtime = getNowTimes(nowtime)
-        let distanceDays = getDistanceDays(this.startTime, nowtime) // 17
-        console.log(distanceDays)
+        nowtime = getNowTimes(nowtime);
+        let distanceDays = getDistanceDays(this.startTime, nowtime); // 17
+        console.log(distanceDays);
         let week;
-        let count = distanceDays / 7
+        let count = distanceDays / 7;
         if (count > 0) {
-          week = Math.floor(distanceDays / 7) + 1
+          week = Math.floor(distanceDays / 7) + 1;
         } else {
-          week = Math.floor(distanceDays / 7)
+          week = Math.floor(distanceDays / 7);
         }
-        this.$store.dispatch('setThisWeek', week)
-      } else { // 用户没有设置开学时间
+        this.$store.dispatch("setThisWeek", week);
+      } else {
+        // 用户没有设置开学时间
         this.$notify({
-          title: '提示',
-          message: '为更好展示课程安排，请到设置中设置开学时间',
+          title: "提示",
+          message: "为更好展示课程安排，请到设置中设置开学时间",
           duration: 5000
         });
-        return
+        return;
       }
     },
     handerTimeList(timeList) {
@@ -110,18 +166,21 @@ export default {
     }
   },
   watch: {
+    thisWeekInfo(val) {
+      this.oneWeekInfo = val
+    },
     timeList: {
       handler: function(val) {
         this.handerTimeList(val);
       },
       deep: true
     },
-    startTime (val) {
-      this.initWeek(val, new Date())
+    startTime(val) {
+      this.initWeek(val, new Date());
     },
     thisWeek(val) {
-      this.thisWeeks = val
-      this.getThisWeekInfo()
+      this.thisWeeks = val;
+      this.getThisWeekInfo();
     }
   }
 };
@@ -142,6 +201,7 @@ export default {
   header {
     overflow: hidden;
     border: 1px solid;
+    width: 880px;
     & > div {
       position: relative;
       display: flex;
@@ -174,11 +234,12 @@ export default {
     & > div,
     & > span {
       float: left;
-      width: 108px;
+      width: 110px;
       height: 30px;
       text-align: center;
       line-height: 30px;
       border-right: 1px solid;
+      box-sizing: border-box;
     }
     & > span {
       display: inline-block;
@@ -188,9 +249,22 @@ export default {
     }
   }
   .main {
+    display: flex;
+    height: 726px;
+    overflow-y: hidden;
+    .content {
+      width: 110px;
+      box-sizing: border-box;
+      & > div {
+        width: 110px;
+        height: 120px;
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+      }
+
+    }
     .schoolTime {
-      display: flex;
-      flex-direction: column;
+      width: 110px;
       & > .time {
         display: flex;
         flex-direction: column;
@@ -203,7 +277,7 @@ export default {
           margin: 10px 0;
         }
         .line {
-          transform: rotate(90deg)
+          transform: rotate(90deg);
         }
       }
       & > .time {
