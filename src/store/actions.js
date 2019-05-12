@@ -1,4 +1,4 @@
-import { setTeacherClass, setStartTime, getUserInfo } from '../api/index'
+import { setTeacherClass, setStartTime, getUserInfo, getThisWeekInfo } from '../api/index'
 export default {
   handleLogin({ commit }, username) { // 登录
     commit('handleLogin', username)
@@ -35,5 +35,13 @@ export default {
     let result = await setTeacherClass(teacherClass)
     // console.log(result)
     // commit('setTeacherClass', teacherClass)
+  },
+  async getThisWeekInfo({commit}, weeksName) { // 获取当前周的信息
+    let result = await getThisWeekInfo(weeksName)
+    if (result.code === 200) {
+      console.log(result)
+      commit('getThisWeekInfo', result.data)
+    }
   }
+
 }

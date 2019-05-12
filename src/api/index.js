@@ -16,12 +16,15 @@ const setTeacherClass = (data) => ajax(`${BASE_URL}setTeacherClass`, data, 'post
 const setStartTime  =  (data) => ajax(`${BASE_URL}setStartTime`, data, 'post')
 // 获取用户的基本信息
 const getUserInfo = () => ajax(`${BASE_URL}getUserInfo`)
+// 获取当前周的上课信息
+const getThisWeekInfo = (weeksName) => ajax(`${BASE_URL}getThisWeekInfo`, {weeksName})
 export {
   handleLogin,
   setUserInfo,
   mudificationPwd,
   setTeacherClass,
   setStartTime,
-  getUserInfo
+  getUserInfo,
+  getThisWeekInfo
 }
  

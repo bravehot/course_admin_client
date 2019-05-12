@@ -101,12 +101,6 @@ export default {
   methods: {
     handleClass,
     handleWeek,
-    removeWeek(item) {
-      let index = this.addClass.week.indexOf(item);
-      if (index !== -1) {
-        this.addClass.week.splice(index, 1);
-      }
-    },
     handleClick() {},
     selectType() {
       this.isSelect = !this.isSelect;

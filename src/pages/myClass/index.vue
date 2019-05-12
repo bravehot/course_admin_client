@@ -57,8 +57,21 @@ export default {
     this.initWeek(this.startTime, new Date())
   },
   methods: {
+    getThisWeekInfo() { // 获取周的上课信息
+      console.log(this.thisWeeks)
+      if (this.thisWeeks) {
+        this.$store.dispatch('getThisWeekInfo', this.thisWeeks)
+      } else {
+        this.$notify({
+          title: '提示',
+          message: '为更好展示课程安排，请到设置中设置开学时间',
+          duration: 5000
+        });
+      }
+
+    },
     selectWeek() {
-      console.log(11)
+      this.getThisWeekInfo()
     },
     initWeek(startTime, nowtime) {
       if (this.startTime) {
@@ -108,6 +121,7 @@ export default {
     },
     thisWeek(val) {
       this.thisWeeks = val
+      this.getThisWeekInfo()
     }
   }
 };

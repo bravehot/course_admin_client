@@ -19,5 +19,8 @@ export default {
   },
   setNeedClass (state, setNeedClass) {
     state.setNeedClass = setNeedClass
+  },
+  getThisWeekInfo(state, thisWeekInfo) {
+    state.thisWeekInfo = thisWeekInfo
   }
 }
