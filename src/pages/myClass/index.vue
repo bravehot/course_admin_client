@@ -13,11 +13,14 @@
     </div>
     <p class="title">上&nbsp;课&nbsp;时&nbsp;间&nbsp;表</p>
     <header>
-      <div>
+      <div class="date">
         <span class="data">日期</span>
         <span class="time">时间</span>
       </div>
-      <span v-for="(item, index) in weekList" :key="index">{{item}}</span>
+      <div v-for="(item, index) in weekList" :key="index" class="week">
+        {{item}}
+        <span class="detail" @click="getDetail(index)">详情</span>
+      </div>
     </header>
     <div class="main">
       <div class="schoolTime">
@@ -27,56 +30,199 @@
           <span>{{item.split(' ')[2]}}</span>
         </div>
       </div>
-      <div class="monday content" >
-        <div v-for="(item, index) in oneWeekInfo.MondayInfo"  :key="index" >
-          <p v-if="item.name">{{item.name[0]}}</p>
-          <p v-if="item.roomName">{{item.roomName[0]}}</p>
-          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+      <div class="monday content" v-if="Array.isArray(this.oneWeekInfo.MondayInfo)">
+        <div v-for="(item, index) in oneWeekInfo.MondayInfo[0]" :key="index" @click="showClassDetail('monday', index)">
+          <p v-if="item.name" class="ellipsis">
+            <strong>课 程：</strong>
+            <br>
+            {{item.name[0]}}
+          </p>
+          <p v-if="item.roomName" class="ellipsis">
+            <strong>教 室：</strong>
+            <br>
+            {{item.roomName[0]}}
+          </p>
+          <p v-if="item.classNames" class="ellipsis">
+            <strong>班 级：</strong>
+            <br>
+            {{item.classNames[0]}}
+          </p>
         </div>
       </div>
-      <div class="tuesday content" >
-        <div v-for="(item, index) in oneWeekInfo.TuesdayInfo" :key="index">
-          <p v-if="item.name">{{item.name[0]}}</p>
-          <p v-if="item.roomName">{{item.roomName[0]}}</p>
-          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+      <div class="tuesday content" v-if="Array.isArray(this.oneWeekInfo.TuesdayInfo)">
+        <div v-for="(item, index) in oneWeekInfo.TuesdayInfo[0]" :key="index" @click="showClassDetail('tuesday', index)">
+          <p v-if="item.name" class="ellipsis">
+            <strong>课 程：</strong>
+            <br>
+            {{item.name[0]}}
+          </p>
+          <p v-if="item.roomName" class="ellipsis">
+            <strong>教室：</strong>
+            <br>
+            {{item.roomName[0]}}
+          </p>
+          <p v-if="item.classNames" class="ellipsis">
+            <strong>班级：</strong>
+            <br>
+            {{item.classNames[0]}}
+          </p>
         </div>
       </div>
-      <div class="wednesday content">
-        <div  v-for="(item, index) in oneWeekInfo.WednesdayInfo" :key="index">
-          <p v-if="item.name">{{item.name[0]}}</p>
-          <p v-if="item.roomName">{{item.roomName[0]}}</p>
-          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+      <div class="wednesday content" v-if="Array.isArray(this.oneWeekInfo.WednesdayInfo)">
+        <div v-for="(item, index) in oneWeekInfo.WednesdayInfo[0]" :key="index" @click="showClassDetail('wednesday', index)">
+          <p v-if="item.name" class="ellipsis">
+            <strong>课 程：</strong>
+            <br>
+            {{item.name[0]}}
+          </p>
+          <p v-if="item.roomName" class="ellipsis">
+            <strong>教室：</strong>
+            <br>
+            {{item.roomName[0]}}
+          </p>
+          <p v-if="item.classNames" class="ellipsis">
+            <strong>班级：</strong>
+            <br>
+            {{item.classNames[0]}}
+          </p>
         </div>
       </div>
-      <div class="thursday content">
-        <div  v-for="(item, index) in oneWeekInfo.ThursdayInfo" :key="index">
-          <p v-if="item.name">{{item.name[0]}}</p>
-          <p v-if="item.roomName">{{item.roomName[0]}}</p>
-          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+      <div class="thursday content" v-if="Array.isArray(this.oneWeekInfo.ThursdayInfo)">
+        <div v-for="(item, index) in oneWeekInfo.ThursdayInfo[0]" :key="index" @click="showClassDetail('thursday', index)">
+          <p v-if="item.name" class="ellipsis">
+            <strong>课 程：</strong>
+            <br>
+            {{item.name[0]}}
+          </p>
+          <p v-if="item.roomName" class="ellipsis">
+            <strong>教室：</strong>
+            <br>
+            {{item.roomName[0]}}
+          </p>
+          <p v-if="item.classNames" class="ellipsis">
+            <strong>班级：</strong>
+            <br>
+            {{item.classNames[0]}}
+          </p>
         </div>
       </div>
-      <div class="friday content">
-        <div  v-for="(item, index) in oneWeekInfo.FridayInfo" :key="index">
-          <p v-if="item.name">{{item.name[0]}}</p>
-          <p v-if="item.roomName">{{item.roomName[0]}}</p>
-          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+      <div class="friday content" v-if="Array.isArray(this.oneWeekInfo.FridayInfo)">
+        <div class="ellipsis" v-for="(item, index) in oneWeekInfo.FridayInfo[0]" :key="index" @click="showClassDetail('friday', index)">
+          <p v-if="item.name" class="ellipsis">
+            <strong>课 程：</strong>
+            <br>
+            {{item.name[0]}}
+          </p>
+          <p v-if="item.roomName" class="ellipsis">
+            <strong>教室：</strong>
+            <br>
+            {{item.roomName[0]}}
+          </p>
+          <p v-if="item.classNames" class="ellipsis">
+            <strong>班级：</strong>
+            <br>
+            {{item.classNames[0]}}
+          </p>
         </div>
       </div>
-      <div class="saturday content">
-        <div v-for="(item, index) in oneWeekInfo.SaturdayInfo" :key="index">
-          <p v-if="item.name">{{item.name[0]}}</p>
-          <p v-if="item.roomName">{{item.roomName[0]}}</p>
-          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+      <div class="saturday content" v-if="Array.isArray(this.oneWeekInfo.SaturdayInfo)">
+        <div class="ellipsis" v-for="(item, index) in oneWeekInfo.SaturdayInfo[0]" :key="index" @click="showClassDetail('saturday', index)">
+          <p v-if="item.name" class="ellipsis">
+            <strong>课 程：</strong>
+            <br>
+            {{item.name[0]}}
+          </p>
+          <p v-if="item.roomName" class="ellipsis">
+            <strong>教室：</strong>
+            <br>
+            {{item.roomName[0]}}
+          </p>
+          <p v-if="item.classNames" class="ellipsis">
+            <strong>班级：</strong>
+            <br>
+            {{item.classNames[0]}}
+          </p>
         </div>
       </div>
-      <div class="sunday content">
-        <div v-for="(item, index) in oneWeekInfo.SundayInfo" :key="index">
-          <p v-if="item.name">{{item.name[0]}}</p>
-          <p v-if="item.roomName">{{item.roomName[0]}}</p>
-          <p v-if="item.classNames">{{item.classNames[0]}}</p>
+      <div class="sunday content" v-if="Array.isArray(this.oneWeekInfo.SundayInfo)">
+        <div class="ellipsis" v-for="(item, index) in oneWeekInfo.SundayInfo[0]" :key="index" @click="showClassDetail('sunday', index)">
+          <p v-if="item.name" class="ellipsis">
+            <strong>课程：</strong>
+            <br>
+            {{item.name[0]}}
+          </p>
+          <p v-if="item.roomName" class="ellipsis">
+            <strong>教室：</strong>
+            <br>
+            {{item.roomName[0]}}
+          </p>
+          <p v-if="item.classNames" class="ellipsis">
+            <strong>班级：</strong>
+            <br>
+            {{item.classNames[0]}}
+          </p>
         </div>
       </div>
     </div>
+    <el-dialog title="详情" :visible.sync="isDialogWeekShow" width="30%" center>
+      <div class="dialogContent">
+        <div class="schoolTime">
+          <div class="time" v-for="(item, index) in schoolTime" :key="index">
+            <span>{{item.split(' ')[0]}}</span>
+            <span class="line">{{item.split(' ')[1]}}</span>
+            <span>{{item.split(' ')[2]}}</span>
+          </div>
+        </div>
+        <div class="wrapBox" v-if="dialogClassContent">
+          <div class="content" v-for="(item, index) in dialogClassContent" :key="index">
+            <div v-for="(week, indexs) in item" :key="indexs">
+              <p v-if="week.name">
+                <strong>课 程：</strong>
+                <br>
+                <span v-if="week.name">{{week.name[0]}}</span>
+              </p>
+              <p v-if="week.roomName" class="ellipsis">
+                <strong>教 室：</strong>
+                <br>
+                <span v-if="week.roomName">{{week.roomName[0]}}</span>
+              </p>
+              <p v-if="week.classNames">
+                <strong>班 级：</strong>
+                <br>
+                <span v-if="week.classNames">{{week.classNames[0]}}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="isDialogWeekShow = false">取 消</el-button>
+        <el-button type="primary" @click="isDialogWeekShow = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog title="课 程 详 情" :visible.sync="isDialogClassShow" width="30%" center>
+      <div class="dialogClassContent" v-if="dialogClassContent.name">
+        <div v-if="Array.isArray(dialogClassContent.name)">
+          <span class="title">课程名称：</span>
+          <span class="detail">{{dialogClassContent.name[0]}}</span>
+        </div>
+        <div v-if="Array.isArray(dialogClassContent.roomName)">
+          <span class="title">教室名称：</span>
+          <span class="detail">{{dialogClassContent.roomName[0]}}</span>
+        </div>
+        <div v-if="Array.isArray(dialogClassContent.classNames)">
+          <span class="title">上课班级：</span>
+          <span class="detail">{{dialogClassContent.classNames[0]}}</span>
+        </div>
+      </div>
+      <div v-else>
+          休息一下吧！！！没课
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="isDialogClassShow = false">取 消</el-button>
+        <el-button type="primary" @click="isDialogClassShow = false" :disabled="isSet">修改此课程</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -88,6 +234,7 @@ import {
   getDistanceDays
 } from "../../util/getTime.js";
 import { weekList } from "../../constants/dataList.js";
+import { get } from "https";
 export default {
   name: "myClass",
   data() {
@@ -102,9 +249,14 @@ export default {
         "18:30 —— 20:00",
         "20:00 —— 21:30"
       ],
-      oneWeekInfo: {}
+      isDialogWeekShow: false,
+      isDialogClassShow: false,
+      oneWeekInfo: {},
+      dialogClassContent: [],
+      isSet: false
     };
   },
+
   computed: {
     ...mapState(["timeList", "thisWeek", "startTime", "thisWeekInfo"])
   },
@@ -112,6 +264,68 @@ export default {
     this.initWeek(this.startTime, new Date());
   },
   methods: {
+    showClassDetail(type, index) { // 查看本节课的上课信息
+      this.isDialogClassShow = true
+      switch (type) {
+        case "monday":
+          this.dialogClassContent = this.oneWeekInfo.MondayInfo[0][index]
+          break;
+        case "tuesday":
+          this.dialogClassContent = this.oneWeekInfo.TuesdayInfo[0][index]
+          break;
+        case "wednesday":
+          this.dialogClassContent = this.oneWeekInfo.WednesdayInfo[0][index]
+          break;
+        case "thursday":
+          this.dialogClassContent = this.oneWeekInfo.ThursdayInfo[0][index]
+          break;
+        case "friday":
+          this.dialogClassContent = this.oneWeekInfo.FridayInfo[0][index]
+          break;
+        case "saturday":
+          this.dialogClassContent = this.oneWeekInfo.SaturdayInfo[0][index]
+          break;
+        case "sunday":
+          this.dialogClassContent = this.oneWeekInfo.SundayInfo[0][index]
+          break;
+        default:
+          break;
+      }
+      if (this.dialogClassContent.name) {
+        this.isSet = false
+      } else {
+        this.isSet = true
+      }
+    },
+    getDetail(index) { // 查看当天的上课信息
+      switch (index) {
+        case 0:
+          this.dialogClassContent = this.oneWeekInfo.MondayInfo
+          break;
+        case 1:
+          this.dialogClassContent = this.oneWeekInfo.TuesdayInfo
+          break;
+        case 2:
+          this.dialogClassContent = this.oneWeekInfo.WednesdayInfo
+          break;
+        case 3:
+          this.dialogClassContent = this.oneWeekInfo.ThursdayInfo
+          break;
+        case 4:
+          this.dialogClassContent = this.oneWeekInfo.FridayInfo
+          break;
+        case 5:
+          this.dialogClassContent = this.oneWeekInfo.SaturdayInfo
+          break;
+        case 6:
+          this.dialogClassContent = this.oneWeekInfo.SundayInfo
+          break;
+        default:
+          break;
+      }
+      // 获取本天的上课信息
+      this.isDialogWeekShow = true;
+    },
     getThisWeekInfo() {
       // 获取周的上课信息
       console.log(this.thisWeeks);
@@ -167,7 +381,7 @@ export default {
   },
   watch: {
     thisWeekInfo(val) {
-      this.oneWeekInfo = val
+      this.oneWeekInfo = val;
     },
     timeList: {
       handler: function(val) {
@@ -193,6 +407,47 @@ export default {
   margin: 20px 20px;
   padding: 20px 40px;
   box-sizing: border-box;
+  .dialogClassContent {
+    padding: 0 20px;
+    .title {
+      font-size: 18px;
+    }
+    & > div {
+      margin: 15px 0;
+    }
+  }
+  .dialogContent {
+    & > div.schoolTime {
+      border-top: 1px solid;
+      border-bottom: 1px solid;
+    }
+    & > div.wrapBox {
+      display: flex;
+      border-bottom: 1px solid;
+      .content {
+        width: 110px;
+        box-sizing: border-box;
+        border-top: 1px solid;
+        & > div {
+          width: 110px;
+          height: 121px;
+          border-right: 1px solid;
+          border-bottom: 1px solid;
+          padding: 5px 10px;
+          box-sizing: border-box;
+          text-align: center;
+          font-size: 14px;
+          p {
+            margin: 5px 0;
+            strong {
+              font-weight: bold;
+              padding-bottom: 5px;
+            }
+          }
+        }
+      }
+    }
+  }
   .title {
     font: bold 24px/30px "微软雅黑";
     text-align: center;
@@ -202,7 +457,7 @@ export default {
     overflow: hidden;
     border: 1px solid;
     width: 880px;
-    & > div {
+    & > div.date {
       position: relative;
       display: flex;
       flex-direction: column;
@@ -231,6 +486,19 @@ export default {
         padding-left: 15px;
       }
     }
+    & > .week {
+      position: relative;
+      .detail {
+        font-size: 12px;
+        position: absolute;
+        bottom: 5px;
+        right: 2px;
+        line-height: 12px;
+        cursor: pointer;
+        color: #409eff;
+        font-weight: bold;
+      }
+    }
     & > div,
     & > span {
       float: left;
@@ -248,41 +516,53 @@ export default {
       border-right: none;
     }
   }
-  .main {
+  .main,
+  .dialogContent {
     display: flex;
     height: 726px;
     overflow-y: hidden;
     .content {
+      cursor: pointer;
       width: 110px;
       box-sizing: border-box;
       & > div {
         width: 110px;
-        height: 120px;
+        height: 121px;
         border-right: 1px solid;
         border-bottom: 1px solid;
+        padding: 5px 10px;
+        box-sizing: border-box;
+        text-align: center;
+        font-size: 14px;
+        p {
+          margin: 5px 0;
+          strong {
+            font-weight: bold;
+            padding-bottom: 5px;
+          }
+        }
       }
-
     }
-    .schoolTime {
-      width: 110px;
-      & > .time {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 109px;
-        height: 120px;
-        border: 1px solid;
-        span {
-          margin: 10px 0;
-        }
-        .line {
-          transform: rotate(90deg);
-        }
+  }
+  .schoolTime {
+    width: 110px;
+    & > .time {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 109px;
+      height: 120px;
+      border: 1px solid;
+      span {
+        margin: 10px 0;
       }
-      & > .time {
-        border-top: none;
+      .line {
+        transform: rotate(90deg);
       }
+    }
+    & > .time {
+      border-top: none;
     }
   }
 }
