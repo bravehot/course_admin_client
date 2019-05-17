@@ -18,7 +18,6 @@ let classData = [
   '第三节',
   '第四节',
   '第五节',
-  '第六节'
 ]
 let weekData = [
   '第一周',

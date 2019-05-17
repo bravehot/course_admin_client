@@ -247,7 +247,6 @@ export default {
         "14:00 —— 15:30",
         "16:00 —— 17:30",
         "18:30 —— 20:00",
-        "20:00 —— 21:30"
       ],
       isDialogWeekShow: false,
       isDialogClassShow: false,
