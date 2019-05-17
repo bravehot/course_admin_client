@@ -9,14 +9,10 @@
         <el-menu-item-group>
           <el-menu-item index="/class" :route='{name: "myClass"}' :class="[path === '/class' ? 'is-active' : ' ']">我的课表</el-menu-item>
           <el-menu-item index="/addClass" :route='{name: "addClass"}' :class="[path === '/addClass' ? 'is-active' : ' ']">添加课表</el-menu-item>
-          <el-menu-item index="/setClassInfo" :route='{name: "setClassInfo"}' :class="[path === '/setClassInfo' ? 'is-active' : ' ']">设置</el-menu-item>
+          <!-- <el-menu-item index="/setClassInfo" :route='{name: "setClassInfo"}' :class="[path === '/setClassInfo' ? 'is-active' : ' ']">设置</el-menu-item> -->
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">上课记录</span>
-      </el-menu-item>
-      <el-submenu index="3">
+      <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-edit"></i>
           <span slot="title">代办事项</span>
@@ -26,9 +22,9 @@
           <el-menu-item index="/myMemo" :route='{name: "myMemo"}'>我的代办</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
-      <el-menu-item index="4">
+      <el-menu-item index="/setClassInfo">
         <i class="el-icon-setting"></i>
-        <span slot="title">个人中心</span>
+        <span slot="title">设置</span>
       </el-menu-item>
     </el-menu>
   </el-aside>

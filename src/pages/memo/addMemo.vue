@@ -5,11 +5,11 @@
       <el-form-item label="活动名称：" prop="name">
         <el-input v-model="memoData.name"  placeholder="请输入活动名称"></el-input>
       </el-form-item>
-      <el-form-item label="活动时间：" prop="time">
+      <el-form-item label="活动时间：">
         <el-date-picker v-model="memoData.time"  type="datetime" placeholder="请选择日期和时间"></el-date-picker>
         <span class="toast">默认使用当前时间</span>
       </el-form-item>
-      <el-form-item label="活动内容：" prop="content">
+      <el-form-item label="活动内容：">
         <el-input type="textarea"  v-model="memoData.content" placeholder="请输入活动内容"></el-input>
       </el-form-item>
       <el-form-item label="活动分类：" prop="selectType">
@@ -60,18 +60,12 @@ export default {
         content: "",
         selectType: [],
         isRemind: true,
-        activeTypeData
+        activeTypeData: []
       },
       rules: {
           name: [
             { required: true, message: '请输入活动名称', trigger: 'blur' },
             { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-          ],
-          time: [
-            { message: '请选择活动时间', trigger: 'change' }
-          ],
-          content: [
-            { message: '请选择日期', trigger: 'change' }
           ],
           selectType: [
             { required: true, message: '请选择分类', trigger: 'change' }
