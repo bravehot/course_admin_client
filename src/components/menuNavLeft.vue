@@ -15,11 +15,11 @@
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-edit"></i>
-          <span slot="title">代办事项</span>
+          <span slot="title">待办事项</span>
         </template>
         <el-menu-item-group>
           <el-menu-item index="/addMemo" :route='{name: "addMemo"}'>添加事项</el-menu-item>
-          <el-menu-item index="/myMemo" :route='{name: "myMemo"}'>我的代办</el-menu-item>
+          <el-menu-item index="/myMemo" :route='{name: "myMemo"}'>我的待办</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
       <el-menu-item index="/setInfo">

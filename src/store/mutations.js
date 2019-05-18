@@ -8,8 +8,8 @@ export default {
   changeCollapse (state) {
     state.isCollapse = !state.isCollapse
   },
-  selectDayData (state, memoList) {
-    state.memoList = memoList
+  selectDayData (state, thisTime) {
+    state.thisTime = thisTime
   },
   getTimeList (state, timeList) {
     state.timeList = timeList

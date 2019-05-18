@@ -26,6 +26,16 @@ const updateClassInfo = (data) => ajax(`${BASE_URL}updateClassInfo`, data, 'post
 const deleteClassInfo = (_id) => ajax(`${BASE_URL}deleteClassInfo`, {_id})
 // 添加上课班级
 const setNeedClass = (data) => ajax(`${BASE_URL}setNeedClass`, data, 'post')
+// 添加待办事项
+const addMemoInfo = (data) => ajax(`${BASE_URL}addMemoInfo`, data, 'post')
+// 获取当天的待办事项
+const getMemoInfo = (username, date) => ajax(`${BASE_URL}getMemoInfo`, {username, date})
+// 更新待办事项
+const updateMemoInfo = (data) => ajax(`${BASE_URL}updateMemoInfo`, data, 'post')
+// 删除此条待办事项
+const deleteThisMemo = (id) => ajax(`${BASE_URL}deleteThisMemo`, {id})
+// 待办事项设置为已完成
+const setMemoFinish = (id, isFinish) => ajax(`${BASE_URL}setMemoFinish`, {id, isFinish})
 export {
   handleLogin,
   setUserInfo,
@@ -37,5 +47,14 @@ export {
   getThisClassInfo,
   updateClassInfo,
   deleteClassInfo,
+<<<<<<< HEAD
   setNeedClass
+=======
+  setNeedClass,
+  addMemoInfo,
+  getMemoInfo,
+  updateMemoInfo,
+  deleteThisMemo,
+  setMemoFinish
+>>>>>>> 83fa422... 新增功能
 }
