@@ -17,7 +17,15 @@ const setStartTime  =  (data) => ajax(`${BASE_URL}setStartTime`, data, 'post')
 // 获取用户的基本信息
 const getUserInfo = () => ajax(`${BASE_URL}getUserInfo`)
 // 获取当前周的上课信息
-const getThisWeekInfo = (weeksName) => ajax(`${BASE_URL}getThisWeekInfo`, {weeksName})
+const getThisWeekInfo = (username, weeksName) => ajax(`${BASE_URL}getThisWeekInfo`, {username, weeksName})
+// 获取本课程的所有信息
+const getThisClassInfo = (username, className) => ajax(`${BASE_URL}getThisClassInfo`, {username, className})
+// 更新课程信息
+const updateClassInfo = (data) => ajax(`${BASE_URL}updateClassInfo`, data, 'post')
+// 删除课程信息
+const deleteClassInfo = (_id) => ajax(`${BASE_URL}deleteClassInfo`, {_id})
+// 添加上课班级
+const setNeedClass = (data) => ajax(`${BASE_URL}setNeedClass`, data, 'post')
 export {
   handleLogin,
   setUserInfo,
@@ -25,6 +33,9 @@ export {
   setTeacherClass,
   setStartTime,
   getUserInfo,
-  getThisWeekInfo
+  getThisWeekInfo,
+  getThisClassInfo,
+  updateClassInfo,
+  deleteClassInfo,
+  setNeedClass
 }
- 

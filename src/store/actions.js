@@ -1,4 +1,4 @@
-import { setTeacherClass, setStartTime, getUserInfo, getThisWeekInfo } from '../api/index'
+import { setTeacherClass, setStartTime, getUserInfo, getThisWeekInfo, getThisClassInfo, setNeedClass } from '../api/index'
 export default {
   handleLogin({ commit }, username) { // 登录
     commit('handleLogin', username)
@@ -15,14 +15,18 @@ export default {
   setThisWeek({ commit }, thisWeek) { // 设置当前周
     commit('setThisWeek', thisWeek)
   },
-  setNeedClass({ commit }, needClassList) { // 设置需要上课的班级
-    commit('setNeedClass', needClassList)
+  async setNeedClass({ commit }, needClassList) { // 设置需要上课的班级
+    let result = await setNeedClass(needClassList)
+    if (result.code === 200) {
+      commit('setNeedClass', result.data)
+    }
   },
   async getUserInfo({ commit }) {
     let result = await getUserInfo()
     if (result.code === 200) {
-      let {classNames, classTimes, startTime, username} = result.data
+      let {classNames, classTimes, startTime} = result.data
       commit('setStartTime', startTime)
+      commit('setNeedClass', classNames)
     }
   },
   async setStartTime({ commit }, startTime) { // 设置开学时间
@@ -32,15 +36,20 @@ export default {
     }
   },
   async setTeacherClass({ commit }, teacherClass) { // 设置教师上课信息
-    let result = await setTeacherClass(teacherClass)
-    // console.log(result)
-    // commit('setTeacherClass', teacherClass)
+    await setTeacherClass(teacherClass)
   },
-  async getThisWeekInfo({commit}, weeksName) { // 获取当前周的信息
-    let result = await getThisWeekInfo(weeksName)
-    if (result.code === 200) {
+  async getThisWeekInfo({commit}, {username, weeksName}) { // 获取当前周的信息
+    let result = await getThisWeekInfo(username, weeksName)
+    if (result.code === 200 || result.code === 400) {
       commit('getThisWeekInfo', result.data)
+    } 
+  },
+  async getThisClassInfo({commit}, {username, className}) { // 获取本课程的所有信息
+    let result = await getThisClassInfo(username, className)
+    if (result.code === 200) {
+      commit('getThisClassInfo', result.data)
+    } else if (result.code === 400) {
+      commit('setErrorInfo', result.msg)
     }
-  }
-
+  },
 }

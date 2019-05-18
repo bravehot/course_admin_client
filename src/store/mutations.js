@@ -1,4 +1,7 @@
 export default {
+  setErrorInfo(state, errMsg='') {
+    state.errMsg = errMsg
+  },
   handleLogin(state, username) {
     state.username = username
   },
@@ -18,9 +21,12 @@ export default {
     state.thisWeek = thisWeek
   },
   setNeedClass (state, setNeedClass) {
-    state.setNeedClass = setNeedClass
+    state.needClassList = setNeedClass
   },
   getThisWeekInfo(state, thisWeekInfo) {
     state.thisWeekInfo = thisWeekInfo
+  },
+  getThisClassInfo(state, thisClassInfo) {
+    state.thisClassInfo = thisClassInfo
   }
 }
