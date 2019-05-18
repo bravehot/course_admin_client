@@ -6,7 +6,7 @@
         <el-option
           v-for="(item, index) in 25"
           :key="index"
-          :value="item"
+          :value="'第' + item + '周'"
           :label="'第' + item + '周'"
         />
       </el-select>
@@ -219,8 +219,8 @@
           休息一下吧！！！没课
       </div>
       <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="setClassInfo" :disabled="isSet">修改此课程</el-button>
         <el-button @click="isDialogClassShow = false">取 消</el-button>
-        <el-button type="primary" @click="isDialogClassShow = false" :disabled="isSet">修改此课程</el-button>
       </span>
     </el-dialog>
   </div>
@@ -261,8 +261,13 @@ export default {
   },
   mounted() {
     this.initWeek(this.startTime, new Date());
+    this.getThisWeekInfo()
   },
   methods: {
+    setClassInfo() { // 修改此课程信息
+      this.$router.push({ name: 'setClassInfo', params: { name: this.dialogClassContent.name[0] }})
+      this.isDialogClassShow = false
+    },
     showClassDetail(type, index) { // 查看本节课的上课信息
       this.isDialogClassShow = true
       switch (type) {
@@ -327,15 +332,10 @@ export default {
     },
     getThisWeekInfo() {
       // 获取周的上课信息
-      console.log(this.thisWeeks);
+      let username = localStorage.getItem("username")
+      let weeksName = this.thisWeeks
       if (this.thisWeeks) {
-        this.$store.dispatch("getThisWeekInfo", this.thisWeeks);
-      } else {
-        this.$notify({
-          title: "提示",
-          message: "为更好展示课程安排，请到设置中设置开学时间",
-          duration: 5000
-        });
+        this.$store.dispatch("getThisWeekInfo", {username, weeksName});
       }
     },
     selectWeek() {

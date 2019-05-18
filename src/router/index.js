@@ -4,9 +4,10 @@ var loadingInstance
 // 课表中心
 const myClass = () => import('../pages/myClass/index.vue')
 const addClass = () => import('../pages/myClass/addClass.vue')
-const setClassInfo = () => import('../pages/myClass/setClassInfo.vue')
+const setInfo = () => import('../pages/myClass/setInfo.vue')
 const addMemo = () => import('../pages/memo/addMemo.vue')
 const myMemo = () => import('../pages/memo/index.vue')
+const setClassInfo = () => import('../pages/myClass/setClassInfo.vue')
 // 登录
 const login = () => import('../pages/login/index.vue')
 const router = new VueRouter({
@@ -25,6 +26,11 @@ const router = new VueRouter({
       path: '/addClass',
       name: 'addClass',
       component: addClass,
+    },
+    {
+      path: '/setInfo',
+      name: 'setInfo',
+      component: setInfo,
     },
     {
       path: '/setClassInfo',
