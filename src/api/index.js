@@ -47,14 +47,10 @@ export {
   getThisClassInfo,
   updateClassInfo,
   deleteClassInfo,
-<<<<<<< HEAD
-  setNeedClass
-=======
   setNeedClass,
   addMemoInfo,
   getMemoInfo,
   updateMemoInfo,
   deleteThisMemo,
   setMemoFinish
->>>>>>> 83fa422... 新增功能
 }
