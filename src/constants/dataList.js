@@ -4,8 +4,8 @@ let activeTypeData = [
     label: '会议'
   },
   {
-    value: '学生',
-    label: '学生'
+    value: '监考',
+    label: '监考'
   },
   {
     value: '教务',

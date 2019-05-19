@@ -49,6 +49,7 @@
 </template>
 <script>
 import { ctiveTypeData } from "../../constants/dataList.js";
+import { mapState } from 'vuex'
 export default {
   name: "addMemo",
   data() {
@@ -60,7 +61,7 @@ export default {
         content: "",
         selectType: [],
         isRemind: true,
-        activeTypeData: []
+        activeTpeData: [],
       },
       rules: {
           name: [
@@ -103,7 +104,7 @@ export default {
       //   key: Date.now()
       // });
     }
-  }
+  },
 };
 </script>
 

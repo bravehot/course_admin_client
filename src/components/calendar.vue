@@ -37,12 +37,14 @@ export default {
   methods: {
     clickDays(item, index) {
       this.active = index;
-      let select = {
-        year: this.year,
-        month: this.month + 1,
-        day: item.content
-      };
-      this.$store.dispatch("selectDayData", select);
+      // let thisTime = {
+      //   year: this.year,
+      //   month: this.month + 1,
+      //   day: item.content
+      // };
+      // 2019-5-19
+      let thisTime = `${this.year}-${this.month + 1}-${item.content}`
+      this.$store.dispatch("selectDayData", thisTime);
     },
     renderData(year, month) {
       // 每个月的天数
