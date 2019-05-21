@@ -48,6 +48,40 @@ const getDistanceDays = (date1 , date2) => {
   return days;
 }
 /**
+ * 判断今天是周几
+ */
+const handleThisWeek = () => {
+  let week = new Date().getDay()
+  let result = ''
+  switch (week) {
+    case 1:
+      result = '星期一'
+      break;
+    case 2:
+      result = '星期二'
+      break;
+    case 3:
+      result = '星期三'
+      break;
+    case 4:
+      result = '星期四'
+      break;
+    case 5:
+      result = '星期五'
+      break;
+    case 6:
+      result = '星期六'
+      break;
+    case 7:
+      result = '星期日'
+      break;
+    default:
+      break;
+  }
+  return result
+}
+
+/**
  * 星期显示转换
  */
 const handleWeek = (day) => {
@@ -97,7 +131,8 @@ export {
   formatMinute,
   getDistanceDays,
   handleWeek,
-  handleClass
+  handleClass,
+  handleThisWeek
 }
 
 

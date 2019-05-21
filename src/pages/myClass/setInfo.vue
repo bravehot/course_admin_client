@@ -177,6 +177,17 @@ export default {
       }
     }
   },
+  watch: {
+    startTime(newVal) {
+      console.log(111)
+      if (newVal) {
+        this.$message({
+          message: '设置成功',
+          type: 'success'
+        })
+      }
+    }
+  },
   components: {
     setTimeClass
   }

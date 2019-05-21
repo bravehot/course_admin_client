@@ -120,5 +120,23 @@ div.wrap {
     line-height: 20px;
   }
 }
+// mobile 
+@media screen and (max-width:600px){
+  div.wrap{
+    .describe {
+      display: none
+    }
+    i {
+      margin: 0 20px 0 20px;
+    }
+    .avater {
+      right: 0px !important;
+      bottom: -10px !important;
+      i {
+        margin: 0;
+      }
+    }
+  }
+}
 </style>
 

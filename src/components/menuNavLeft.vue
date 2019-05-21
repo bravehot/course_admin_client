@@ -57,5 +57,7 @@ export default {
   .el-menu {
     height: 100%
   }
-
+  @media screen and (max-width:600px){ 
+    
+  }
 </style>

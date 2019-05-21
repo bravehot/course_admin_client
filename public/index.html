@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, width=device-width, initial-scale=1.0" />
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="https://at.alicdn.com/t/font_1083141_aq26lhueok.css">
     <title>山东科技大学课程管理中心</title>
@@ -12,7 +13,20 @@
     <noscript>
       <strong>We're sorry but todolist-vue doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <script type="text/javascript" src="http://cdn-hangzhou.goeasy.io/goeasy.js"></script>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      (function() {
+        var goEasy = new GoEasy({
+          appkey:'BC-e95e600df2ac4c769a3d8105904508bc'
+        });
+        window.goEasy = goEasy
+        var targetW = 640
+        var scale = document.documentElement.clientWidth / targetW
+        var metaNode = document.querySelector('meta[name="viewport"]')
+        metaNode.content = 'initial-scale='+scale +', minimum-scale='+scale+',maximum-scale='+scale+',user-scalable=0'
+      })()
+    </script>
   </body>
 </html>
