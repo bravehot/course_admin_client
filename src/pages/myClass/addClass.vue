@@ -9,7 +9,9 @@
       </el-form-item>
       <el-form-item label="上课星期：" required>
         <el-tabs v-model="activeWeek" type="border-card">
-          <el-tab-pane :label="item" :name="item" v-for="(item, index) in weekList" :key=index><addWeekInfo :week=addClass.week :indexs=index /></el-tab-pane>
+          <el-tab-pane :label="item" :name="item" v-for="(item, index) in weekList" :key=index>
+            <addWeekInfo :week=addClass.week :indexs=index />
+          </el-tab-pane>
         </el-tabs>
       </el-form-item>
       <el-form-item label="上课周：" class="week" prop="weeks">
@@ -52,7 +54,7 @@ export default {
         weeks: [{ required: !this.isSelect, message: "请选择上课周", trigger: "blur" }],
       },
       addClass: {
-        name: "",
+        name: "", // 课表内容
         classRoom: "",
         week: [
           {}, {}, {}, {}, {}, {}, {}
@@ -149,6 +151,12 @@ export default {
     margin-top: 50px;
     display: flex;
     justify-content: space-around;
+  }
+}
+@media screen and (max-width: 680px) {
+  .addClass{
+    width: 100%;
+    box-sizing: border-box
   }
 }
 </style>

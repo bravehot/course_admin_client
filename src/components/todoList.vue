@@ -299,4 +299,9 @@ export default {
     }
   }
 }
+@media screen and (max-width: 680px){
+  .el-date-editor {
+    width: 100%;
+  }
+}
 </style>

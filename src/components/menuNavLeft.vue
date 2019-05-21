@@ -57,7 +57,33 @@ export default {
   .el-menu {
     height: 100%
   }
-  @media screen and (max-width:600px){ 
-    
+  @media screen and (max-width:680px){ 
+    .el-aside {
+      // display: none;
+      position: absolute;
+      top: 90px;
+      z-index: 10;
+      width: 100% !important;
+      margin: 0 auto;
+      text-align: center;
+      .el-menu--collapse {
+        position: fixed;
+        top: 100px;
+        left: 5px;
+        height: 170px;
+        border-radius: 10px;
+        background: #b8e5f8;
+        opacity: 0.5;
+      }
+      .el-menu > .el-submenu > .el-submenu__title span{
+        font-size: 20px;
+      }
+      .el-menu > .el-submenu .el-menu-item {
+        font-size: 18px;
+      }
+      .el-menu-item {
+        font-size: 18px;
+      }
+    }
   }
 </style>

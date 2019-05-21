@@ -246,4 +246,13 @@ export default {
     }
   }
 }
+@media screen and (max-width: 680px){
+  .wrap {
+    min-width: 100vw;
+  }
+  .el-tabs {
+    
+  }
+}
+
 </style>
