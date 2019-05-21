@@ -261,7 +261,6 @@ export default {
   },
   mounted() {
     this.initWeek(this.startTime, new Date());
-    this.getThisWeekInfo()
   },
   methods: {
     setClassInfo() { // 修改此课程信息
@@ -330,13 +329,10 @@ export default {
       // 获取本天的上课信息
       this.isDialogWeekShow = true;
     },
-    getThisWeekInfo() {
-      // 获取周的上课信息
+    getThisWeekInfo() { // 获取周的上课信息
       let username = localStorage.getItem("username")
       let weeksName = this.thisWeeks
-      if (this.thisWeeks) {
-        this.$store.dispatch("getThisWeekInfo", {username, weeksName});
-      }
+      this.$store.dispatch("getThisWeekInfo", {username, weeksName});
     },
     selectWeek() {
       this.getThisWeekInfo();
@@ -345,7 +341,6 @@ export default {
       if (this.startTime) {
         nowtime = getNowTimes(nowtime);
         let distanceDays = getDistanceDays(this.startTime, nowtime); // 17
-        console.log(distanceDays);
         let week;
         let count = distanceDays / 7;
         if (count > 0) {
@@ -353,7 +348,11 @@ export default {
         } else {
           week = Math.floor(distanceDays / 7);
         }
-        this.$store.dispatch("setThisWeek", week);
+        this.$store.dispatch("setThisWeek", `第${week}周`);
+        if (week) {
+          this.thisWeeks = `第${week}周`
+          this.getThisWeekInfo();
+        }
       } else {
         // 用户没有设置开学时间
         this.$notify({
@@ -378,9 +377,16 @@ export default {
       }
     }
   },
+   beforeRouteEnter(to, from, next) { //导航守卫，进入页面时更改状态
+    console.log(123)
+    next(vm => {
+
+    });
+  },
   watch: {
     thisWeekInfo(val) {
       this.oneWeekInfo = val;
+      console.log(this.oneWeekInfo)
     },
     timeList: {
       handler: function(val) {
@@ -393,6 +399,7 @@ export default {
     },
     thisWeek(val) {
       this.thisWeeks = val;
+      console.log(11111)
       this.getThisWeekInfo();
     }
   }
@@ -418,11 +425,9 @@ export default {
   .dialogContent {
     & > div.schoolTime {
       border-top: 1px solid;
-      border-bottom: 1px solid;
     }
     & > div.wrapBox {
       display: flex;
-      border-bottom: 1px solid;
       .content {
         width: 110px;
         box-sizing: border-box;
@@ -518,7 +523,6 @@ export default {
   .main,
   .dialogContent {
     display: flex;
-    height: 726px;
     overflow-y: hidden;
     .content {
       cursor: pointer;

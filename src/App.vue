@@ -23,14 +23,17 @@ import menuHead from "./components/menuHead";
 import menuNavLeft from "./components/menuNavLeft";
 import Login from "../src/pages/login";
 import { getCookie } from "./util/handleCookie.js";
+import { handleThisWeek } from './util/getTime.js'
 export default {
   name: "app",
   mounted() {
     this.ishaveToken();
-    this.getUser()
+    this.getUser();
+    this.connectSocket();
   },
   methods: {
-    ishaveToken() { // 判断是否自动登录
+    ishaveToken() {
+      // 判断是否自动登录
       let token = getCookie("token");
       if (token) {
         this.$router.push("/class");
@@ -39,9 +42,35 @@ export default {
       }
     },
     getUser() {
-      this.$store.dispatch('getUserInfo')
+      this.$store.dispatch("getUserInfo");
+    },
+    connectSocket() {
+      if (window.goEasy) {
+        this.$goEasy = window.goEasy;
+        let username = localStorage.getItem("username")
+        this.$goEasy.subscribe({
+          channel: "sendClassInfo",
+          onMessage: (message) => {
+          this.$notify({
+            title: '课程提醒',
+            dangerouslyUseHTMLString: true,
+            type: 'success',
+            message: `<strong>早上好</strong> <br/> 
+            今天是${handleThisWeek()},
+            您今天共有${message.content}门课 <br/>
+            点击查看详情`,
+            duration: 0,
+            onClick: () => {
+              this.$router.push('/class')
+            }
+          });
+          }
+        });
+      }
     }
   },
+  // scheduleCronstyle();
+  // 使用socket 通信
   components: {
     menuHead,
     menuNavLeft,
@@ -54,7 +83,7 @@ export default {
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC,
     Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei,
     sans-serif;
-    color: #606266;
+  color: #606266;
   & > div {
     width: 100%;
   }
