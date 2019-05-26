@@ -121,7 +121,7 @@ div.wrap {
   }
 }
 // mobile 
-@media screen and (max-width:600px){
+@media screen and (max-width: 680px){
   div.wrap{
     .describe {
       display: none

@@ -102,4 +102,22 @@ export default {
     }
   }
 }
+// mobile
+@media screen and (max-width: 680px){
+  .content {
+    width: 500px !important;
+    .title {
+      font: bold 30px/32px "-apple-system" !important;
+    }
+    .el-form {
+      width: 400px;
+      .el-input {
+        font-size: 22px;
+      }
+    }
+    button {
+      font-size: 22px;
+    }
+  }
+}
 </style>

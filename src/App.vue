@@ -98,4 +98,7 @@ export default {
 .el-container {
   height: auto;
 }
+@media screen and (max-width: 680px){
+  font-size: 20px !important;
+}
 </style>
