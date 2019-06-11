@@ -8,41 +8,15 @@
         <el-input v-model="addClass.classRoom" placeholder="请输入上课教室"></el-input>
       </el-form-item>
       <el-form-item label="上课星期：" required>
-        <el-tabs v-model="activeWeek" type="border-card" @tab-click="handleClick">
-          <el-tab-pane :label="item" :name="item" v-for="(item, index) in weekList" :key=index><addWeekInfo :week=addClass.week :indexs=index /></el-tab-pane>
+        <el-tabs v-model="activeWeek" type="border-card">
+          <el-tab-pane :label="item" :name="item" v-for="(item, index) in weekList" :key=index>
+            <addWeekInfo :week=addClass.week :indexs=index />
+          </el-tab-pane>
         </el-tabs>
       </el-form-item>
       <el-form-item label="上课周：" class="week" prop="weeks">
-        <div v-if="isSelect" class="selectBox">
-          <el-col :span="10">
-            <el-form-item prop="start">
-              <el-select v-model="addClass.start" placeholder="请选择开始周">
-                <el-option
-                  v-for="(item, index) in 25"
-                  :key="index"
-                  :value="item"
-                  :label="'第' + item + '周'"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-          <el-col class="line" :span="2">-</el-col>
-          <el-col :span="10">
-            <el-form-item prop="end">
-              <el-select v-model="addClass.end" placeholder="请选择结束周">
-                <el-option
-                  v-for="(item, index) in 25"
-                  :key="index"
-                  :value="item"
-                  :label="'第' + item + '周'"
-                />
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </div>
         <el-select
           :class="{normal: !isSelect}"
-          v-else
           v-model="addClass.weeks"
           multiple
           filterable
@@ -50,9 +24,8 @@
           default-first-option
           placeholder="请选择第几周上课"
         >
-          <el-option v-for="(item, index) in 25" :key="index" :value="item" :label="'第' + item + '周'"/>
+          <el-option v-for="(item, index) in 25" :key="index" :value="'第' + item + '周'" :label="'第' + item + '周'"/>
         </el-select>
-        <!-- <el-button type="info" size="small" @click="selectType" class="selectButton">切换选择模式</el-button> -->
       </el-form-item>
       <div class="buttonBox">
         <el-button type="primary" @click="submitData('classForm')">提交</el-button>
@@ -63,7 +36,6 @@
 </template>
 <script>
 import { classData, weekData, weekList } from "../../constants/dataList.js";
-import { handleWeek, handleClass } from "../../util/getTime.js";
 import addWeekInfo from '../../components/addWeekInfo'
 import { mapState } from "vuex";
 export default {
@@ -80,17 +52,13 @@ export default {
           { required: true, message: "请输入上课教室", trigger: "blur" }
         ],
         weeks: [{ required: !this.isSelect, message: "请选择上课周", trigger: "blur" }],
-        // start: [{ required: this.isSelect, message: "请选择开始周", trigger: "blur" }],
-        // end: [{ required: this.isSelect, message: "请选择结束周", trigger: "blur" }]
       },
       addClass: {
-        name: "",
+        name: "", // 课表内容
         classRoom: "",
         week: [
           {}, {}, {}, {}, {}, {}, {}
         ],
-        start: "",
-        end: "",
         weeks: ""
       }
     };
@@ -99,12 +67,6 @@ export default {
     ...mapState(["needClassList"])
   },
   methods: {
-    handleClass,
-    handleWeek,
-    handleClick() {},
-    selectType() {
-      this.isSelect = !this.isSelect;
-    },
     submitData(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
@@ -126,9 +88,6 @@ export default {
     resetData(formName) {
       this.$refs[formName].resetFields();
     },
-    resetWeek(formName) {
-      this.$refs[formName].resetFields();
-    }
   },
   watch: {},
   components: {
@@ -192,6 +151,12 @@ export default {
     margin-top: 50px;
     display: flex;
     justify-content: space-around;
+  }
+}
+@media screen and (max-width: 680px) {
+  .addClass{
+    width: 100%;
+    box-sizing: border-box
   }
 }
 </style>

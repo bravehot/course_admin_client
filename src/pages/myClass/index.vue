@@ -6,7 +6,7 @@
         <el-option
           v-for="(item, index) in 25"
           :key="index"
-          :value="item"
+          :value="'第' + item + '周'"
           :label="'第' + item + '周'"
         />
       </el-select>
@@ -31,7 +31,11 @@
         </div>
       </div>
       <div class="monday content" v-if="Array.isArray(this.oneWeekInfo.MondayInfo)">
-        <div v-for="(item, index) in oneWeekInfo.MondayInfo[0]" :key="index" @click="showClassDetail('monday', index)">
+        <div
+          v-for="(item, index) in oneWeekInfo.MondayInfo[0]"
+          :key="index"
+          @click="showClassDetail('monday', index)"
+        >
           <p v-if="item.name" class="ellipsis">
             <strong>课 程：</strong>
             <br>
@@ -50,7 +54,11 @@
         </div>
       </div>
       <div class="tuesday content" v-if="Array.isArray(this.oneWeekInfo.TuesdayInfo)">
-        <div v-for="(item, index) in oneWeekInfo.TuesdayInfo[0]" :key="index" @click="showClassDetail('tuesday', index)">
+        <div
+          v-for="(item, index) in oneWeekInfo.TuesdayInfo[0]"
+          :key="index"
+          @click="showClassDetail('tuesday', index)"
+        >
           <p v-if="item.name" class="ellipsis">
             <strong>课 程：</strong>
             <br>
@@ -69,7 +77,11 @@
         </div>
       </div>
       <div class="wednesday content" v-if="Array.isArray(this.oneWeekInfo.WednesdayInfo)">
-        <div v-for="(item, index) in oneWeekInfo.WednesdayInfo[0]" :key="index" @click="showClassDetail('wednesday', index)">
+        <div
+          v-for="(item, index) in oneWeekInfo.WednesdayInfo[0]"
+          :key="index"
+          @click="showClassDetail('wednesday', index)"
+        >
           <p v-if="item.name" class="ellipsis">
             <strong>课 程：</strong>
             <br>
@@ -88,7 +100,11 @@
         </div>
       </div>
       <div class="thursday content" v-if="Array.isArray(this.oneWeekInfo.ThursdayInfo)">
-        <div v-for="(item, index) in oneWeekInfo.ThursdayInfo[0]" :key="index" @click="showClassDetail('thursday', index)">
+        <div
+          v-for="(item, index) in oneWeekInfo.ThursdayInfo[0]"
+          :key="index"
+          @click="showClassDetail('thursday', index)"
+        >
           <p v-if="item.name" class="ellipsis">
             <strong>课 程：</strong>
             <br>
@@ -107,7 +123,12 @@
         </div>
       </div>
       <div class="friday content" v-if="Array.isArray(this.oneWeekInfo.FridayInfo)">
-        <div class="ellipsis" v-for="(item, index) in oneWeekInfo.FridayInfo[0]" :key="index" @click="showClassDetail('friday', index)">
+        <div
+          class="ellipsis"
+          v-for="(item, index) in oneWeekInfo.FridayInfo[0]"
+          :key="index"
+          @click="showClassDetail('friday', index)"
+        >
           <p v-if="item.name" class="ellipsis">
             <strong>课 程：</strong>
             <br>
@@ -126,7 +147,12 @@
         </div>
       </div>
       <div class="saturday content" v-if="Array.isArray(this.oneWeekInfo.SaturdayInfo)">
-        <div class="ellipsis" v-for="(item, index) in oneWeekInfo.SaturdayInfo[0]" :key="index" @click="showClassDetail('saturday', index)">
+        <div
+          class="ellipsis"
+          v-for="(item, index) in oneWeekInfo.SaturdayInfo[0]"
+          :key="index"
+          @click="showClassDetail('saturday', index)"
+        >
           <p v-if="item.name" class="ellipsis">
             <strong>课 程：</strong>
             <br>
@@ -145,7 +171,12 @@
         </div>
       </div>
       <div class="sunday content" v-if="Array.isArray(this.oneWeekInfo.SundayInfo)">
-        <div class="ellipsis" v-for="(item, index) in oneWeekInfo.SundayInfo[0]" :key="index" @click="showClassDetail('sunday', index)">
+        <div
+          class="ellipsis"
+          v-for="(item, index) in oneWeekInfo.SundayInfo[0]"
+          :key="index"
+          @click="showClassDetail('sunday', index)"
+        >
           <p v-if="item.name" class="ellipsis">
             <strong>课程：</strong>
             <br>
@@ -164,7 +195,7 @@
         </div>
       </div>
     </div>
-    <el-dialog title="详情" :visible.sync="isDialogWeekShow" width="30%" center>
+    <el-dialog title="详情" :visible.sync="isDialogWeekShow" :width="dialogWidth" center>
       <div class="dialogContent">
         <div class="schoolTime">
           <div class="time" v-for="(item, index) in schoolTime" :key="index">
@@ -200,7 +231,7 @@
         <el-button type="primary" @click="isDialogWeekShow = false">确 定</el-button>
       </span>
     </el-dialog>
-    <el-dialog title="课 程 详 情" :visible.sync="isDialogClassShow" width="30%" center>
+    <el-dialog title="课 程 详 情" :visible.sync="isDialogClassShow" :width="dialogWidth" center>
       <div class="dialogClassContent" v-if="dialogClassContent.name">
         <div v-if="Array.isArray(dialogClassContent.name)">
           <span class="title">课程名称：</span>
@@ -215,12 +246,10 @@
           <span class="detail">{{dialogClassContent.classNames[0]}}</span>
         </div>
       </div>
-      <div v-else>
-          休息一下吧！！！没课
-      </div>
+      <div v-else>休息一下吧！！！没课</div>
       <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="setClassInfo" :disabled="isSet">修改此课程</el-button>
         <el-button @click="isDialogClassShow = false">取 消</el-button>
-        <el-button type="primary" @click="isDialogClassShow = false" :disabled="isSet">修改此课程</el-button>
       </span>
     </el-dialog>
   </div>
@@ -239,6 +268,7 @@ export default {
   name: "myClass",
   data() {
     return {
+      dialogWidth: '30%',
       thisWeeks: "",
       weekList,
       schoolTime: [
@@ -246,14 +276,14 @@ export default {
         "10:00 —— 11:30",
         "14:00 —— 15:30",
         "16:00 —— 17:30",
-        "18:30 —— 20:00",
+        "18:30 —— 20:00"
       ],
       isDialogWeekShow: false,
       isDialogClassShow: false,
       oneWeekInfo: {},
       dialogClassContent: [],
-      isSet: false
-    };
+      isSet: false,
+    }
   },
 
   computed: {
@@ -263,61 +293,71 @@ export default {
     this.initWeek(this.startTime, new Date());
   },
   methods: {
-    showClassDetail(type, index) { // 查看本节课的上课信息
-      this.isDialogClassShow = true
+    setClassInfo() {
+      // 修改此课程信息
+      this.$router.push({
+        name: "setClassInfo",
+        params: { name: this.dialogClassContent.name[0] }
+      });
+      this.isDialogClassShow = false;
+    },
+    showClassDetail(type, index) {
+      // 查看本节课的上课信息
+      this.isDialogClassShow = true;
       switch (type) {
         case "monday":
-          this.dialogClassContent = this.oneWeekInfo.MondayInfo[0][index]
+          this.dialogClassContent = this.oneWeekInfo.MondayInfo[0][index];
           break;
         case "tuesday":
-          this.dialogClassContent = this.oneWeekInfo.TuesdayInfo[0][index]
+          this.dialogClassContent = this.oneWeekInfo.TuesdayInfo[0][index];
           break;
         case "wednesday":
-          this.dialogClassContent = this.oneWeekInfo.WednesdayInfo[0][index]
+          this.dialogClassContent = this.oneWeekInfo.WednesdayInfo[0][index];
           break;
         case "thursday":
-          this.dialogClassContent = this.oneWeekInfo.ThursdayInfo[0][index]
+          this.dialogClassContent = this.oneWeekInfo.ThursdayInfo[0][index];
           break;
         case "friday":
-          this.dialogClassContent = this.oneWeekInfo.FridayInfo[0][index]
+          this.dialogClassContent = this.oneWeekInfo.FridayInfo[0][index];
           break;
         case "saturday":
-          this.dialogClassContent = this.oneWeekInfo.SaturdayInfo[0][index]
+          this.dialogClassContent = this.oneWeekInfo.SaturdayInfo[0][index];
           break;
         case "sunday":
-          this.dialogClassContent = this.oneWeekInfo.SundayInfo[0][index]
+          this.dialogClassContent = this.oneWeekInfo.SundayInfo[0][index];
           break;
         default:
           break;
       }
       if (this.dialogClassContent.name) {
-        this.isSet = false
+        this.isSet = false;
       } else {
-        this.isSet = true
+        this.isSet = true;
       }
     },
-    getDetail(index) { // 查看当天的上课信息
+    getDetail(index) {
+      // 查看当天的上课信息
       switch (index) {
         case 0:
-          this.dialogClassContent = this.oneWeekInfo.MondayInfo
+          this.dialogClassContent = this.oneWeekInfo.MondayInfo;
           break;
         case 1:
-          this.dialogClassContent = this.oneWeekInfo.TuesdayInfo
+          this.dialogClassContent = this.oneWeekInfo.TuesdayInfo;
           break;
         case 2:
-          this.dialogClassContent = this.oneWeekInfo.WednesdayInfo
+          this.dialogClassContent = this.oneWeekInfo.WednesdayInfo;
           break;
         case 3:
-          this.dialogClassContent = this.oneWeekInfo.ThursdayInfo
+          this.dialogClassContent = this.oneWeekInfo.ThursdayInfo;
           break;
         case 4:
-          this.dialogClassContent = this.oneWeekInfo.FridayInfo
+          this.dialogClassContent = this.oneWeekInfo.FridayInfo;
           break;
         case 5:
-          this.dialogClassContent = this.oneWeekInfo.SaturdayInfo
+          this.dialogClassContent = this.oneWeekInfo.SaturdayInfo;
           break;
         case 6:
-          this.dialogClassContent = this.oneWeekInfo.SundayInfo
+          this.dialogClassContent = this.oneWeekInfo.SundayInfo;
           break;
         default:
           break;
@@ -327,16 +367,9 @@ export default {
     },
     getThisWeekInfo() {
       // 获取周的上课信息
-      console.log(this.thisWeeks);
-      if (this.thisWeeks) {
-        this.$store.dispatch("getThisWeekInfo", this.thisWeeks);
-      } else {
-        this.$notify({
-          title: "提示",
-          message: "为更好展示课程安排，请到设置中设置开学时间",
-          duration: 5000
-        });
-      }
+      let username = localStorage.getItem("username");
+      let weeksName = this.thisWeeks;
+      this.$store.dispatch("getThisWeekInfo", { username, weeksName });
     },
     selectWeek() {
       this.getThisWeekInfo();
@@ -345,7 +378,6 @@ export default {
       if (this.startTime) {
         nowtime = getNowTimes(nowtime);
         let distanceDays = getDistanceDays(this.startTime, nowtime); // 17
-        console.log(distanceDays);
         let week;
         let count = distanceDays / 7;
         if (count > 0) {
@@ -353,7 +385,11 @@ export default {
         } else {
           week = Math.floor(distanceDays / 7);
         }
-        this.$store.dispatch("setThisWeek", week);
+        this.$store.dispatch("setThisWeek", `第${week}周`);
+        if (week) {
+          this.thisWeeks = `第${week}周`;
+          this.getThisWeekInfo();
+        }
       } else {
         // 用户没有设置开学时间
         this.$notify({
@@ -377,6 +413,16 @@ export default {
         });
       }
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      let width = document.documentElement.clientWidth
+      if (width < 800) {
+        vm.dialogWidth = '80%'
+      }
+      //导航守卫，进入页面时更改状态
+      console.log(123);
+    });
   },
   watch: {
     thisWeekInfo(val) {
@@ -418,11 +464,9 @@ export default {
   .dialogContent {
     & > div.schoolTime {
       border-top: 1px solid;
-      border-bottom: 1px solid;
     }
     & > div.wrapBox {
       display: flex;
-      border-bottom: 1px solid;
       .content {
         width: 110px;
         box-sizing: border-box;
@@ -453,9 +497,9 @@ export default {
     padding: 20px 0;
   }
   header {
-    overflow: hidden;
     border: 1px solid;
     width: 880px;
+    display: flex;
     & > div.date {
       position: relative;
       display: flex;
@@ -500,7 +544,6 @@ export default {
     }
     & > div,
     & > span {
-      float: left;
       width: 110px;
       height: 30px;
       text-align: center;
@@ -518,7 +561,6 @@ export default {
   .main,
   .dialogContent {
     display: flex;
-    height: 726px;
     overflow-y: hidden;
     .content {
       cursor: pointer;
@@ -562,6 +604,64 @@ export default {
     }
     & > .time {
       border-top: none;
+    }
+  }
+}
+@media screen and (max-width: 680px) {
+  .wrap {
+    min-width: 560px !important;
+    .selectBox {
+      width: 100%;
+      & > span {
+        font-size: 20px;
+      }
+      .select {
+        .el-input__inner {
+          font-size: 20px;
+        }
+      }
+    
+    }
+    header {
+      width: 560px !important;
+      overflow: auto;
+      & > div {
+        width: 70px;
+      }
+      .detail {
+        right: 0;
+        bottom: 2px;
+      }
+      & > div.date {
+        &::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          width: 70px;
+          height: 1px;
+          box-sizing: border-box;
+          border-bottom: 1px solid #333;
+          transform: rotateZ(14deg);
+        }
+      }
+    }
+    .main {
+      width: 560px;
+      .schoolTime {
+        width: 70px;
+        .time {
+          width: 70px;
+        }
+      }
+      .content {
+        width: 70px;
+        & > div {
+          width: 100%;
+        }
+      }
+      .el-dialog {
+        width: 50%;
+      }
     }
   }
 }
