@@ -70,7 +70,7 @@ export default {
         position: fixed;
         top: 100px;
         left: 5px;
-        height: 170px;
+        height: 190px;
         border-radius: 10px;
         background: #b8e5f8;
         opacity: 0.5;
@@ -81,9 +81,9 @@ export default {
       .el-menu > .el-submenu .el-menu-item {
         font-size: 18px;
       }
-      .el-menu-item {
-        font-size: 18px;
-      }
+    }
+    .el-menu-item {
+      font-size: 18px;
     }
   }
 </style>

@@ -427,7 +427,6 @@ export default {
   watch: {
     thisWeekInfo(val) {
       this.oneWeekInfo = val;
-      console.log(this.oneWeekInfo);
     },
     timeList: {
       handler: function(val) {
@@ -440,7 +439,6 @@ export default {
     },
     thisWeek(val) {
       this.thisWeeks = val;
-      console.log(11111);
       this.getThisWeekInfo();
     }
   }
@@ -614,6 +612,15 @@ export default {
     min-width: 560px !important;
     .selectBox {
       width: 100%;
+      & > span {
+        font-size: 20px;
+      }
+      .select {
+        .el-input__inner {
+          font-size: 20px;
+        }
+      }
+    
     }
     header {
       width: 560px !important;

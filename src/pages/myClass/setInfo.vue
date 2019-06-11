@@ -251,7 +251,10 @@ export default {
     min-width: 100vw;
   }
   .el-tabs {
-    
+    font-size: 16px;
+  }
+  .el-tabs__item {
+    font-size: 18px
   }
 }
 
